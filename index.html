@@ -745,9 +745,10 @@ img{max-width:100%}
       <h2>Initial Tiering</h2>
     </div>
     <p class="sec-lede">
-      Three independent deciles are computed, one per claims source, and the max of the three is kept, so an
-      HCP gets credit for whichever source shows the strongest relative engagement. Decile then combines with
-      KOL, treater and specialty signals to produce the initial tier.
+      Three independent deciles are computed, one per claims source, each built from that source&rsquo;s
+      Q77.4 patient and claim volume. The max of the three is kept, so an HCP gets credit for whichever
+      source shows the strongest Q77.4 activity. Decile then combines with KOL, treater and specialty
+      signals to produce the initial tier.
     </p>
 
     <div class="split" style="margin-bottom:32px">
@@ -772,7 +773,7 @@ img{max-width:100%}
             <tbody>
               <tr>
                 <td class="rule-t"><i class="dot" style="background:var(--t1)"></i>Tier 1</td>
-                <td>KOL/QED flagged <strong>or</strong> known treater <strong>or</strong> decile &ge; 5 and Ped Endo/Geneticist</td>
+                <td>KOL <strong>or</strong> Treater <strong>or</strong> decile &ge; 5 and Ped Endo/Geneticist</td>
               </tr>
               <tr>
                 <td class="rule-t"><i class="dot" style="background:var(--t2)"></i>Tier 2</td>
@@ -999,15 +1000,15 @@ img{max-width:100%}
       <h2>Workload Index</h2>
     </div>
     <p class="sec-lede">
-      The last step converts final tier and final decile into a single number that sizes each HCP&rsquo;s
-      fair share of the field&rsquo;s fixed call capacity.
+      The last step converts final tier and final decile into a single number that sizes each target
+      HCP&rsquo;s share of the field&rsquo;s fixed call capacity.
     </p>
 
     <div class="formula">
       <span class="lhs">workload_index</span> &nbsp;=&nbsp; 32,000 &nbsp;&times;&nbsp; [
-      &nbsp;( calls &divide; target_calls ) &times; <span class="wt wt70">70%</span>
+      &nbsp;( target_call &divide; SUM(target_calls) ) &times; <span class="wt wt70">70%</span>
       &nbsp;&nbsp;+&nbsp;&nbsp;
-      ( final_decile &divide; target_deciles ) &times; <span class="wt wt30">30%</span> &nbsp;]
+      ( final_decile &divide; SUM(target_final_deciles) ) &times; <span class="wt wt30">30%</span> &nbsp;]
     </div>
 
     <div class="split">
@@ -1020,7 +1021,7 @@ img{max-width:100%}
           <li><span class="k"><i class="dot" style="background:var(--t4)"></i>Tier 4 &amp; 5</span><span class="v">excluded</span></li>
         </ul>
         <div class="assume">
-          <b>Assumption.</b> These per-tier call counts are a ProcDNA assumption for sizing the plan, not a
+          <b>Assumption.</b> These per-tier call counts are an assumption for sizing the plan, not a
           value derived from the data. They can be re-set with the field team.
         </div>
       </div>
@@ -1028,16 +1029,16 @@ img{max-width:100%}
         <h3>Weighting &amp; capacity</h3>
         <ul class="kv">
           <li><span class="k">Total call pool</span><span class="v">32,000</span></li>
-          <li><span class="k"><span class="wt wt70">70%</span> Call share</span><span class="v">calls &divide; target_calls</span></li>
-          <li><span class="k"><span class="wt wt30">30%</span> Final decile share</span><span class="v">decile &divide; target_deciles</span></li>
+          <li><span class="k"><span class="wt wt70">70%</span> Call share</span><span class="v">target_call &divide; SUM(target_calls)</span></li>
+          <li><span class="k"><span class="wt wt30">30%</span> Final decile share</span><span class="v">final_decile &divide; SUM(target_final_deciles)</span></li>
           <li><span class="k">Eligible pool</span><span class="v">Tiers 1-3 only</span></li>
         </ul>
       </div>
       <div class="panel">
         <h3>Geography</h3>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
-          Each HCP resolves to one ZIP through a source waterfall, then maps to a state and territory via the
-          ZIP-to-territory reference table, so workload can be balanced and compared by geography.
+          Each HCP is mapped to one ZIP through VOD address, then maps to a territory via the
+          ZIP-to-territory reference table, so workload can be compared by geography.
         </p>
       </div>
     </div>
