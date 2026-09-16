@@ -379,6 +379,26 @@ td.num,th.num{text-align:right;font-family:var(--ff-mono);font-variant-numeric:t
 }
 .speclist dd{margin:0;font-size:13.5px;color:var(--ink);line-height:1.5}
 
+/* ordered list with counts */
+.ordlist{list-style:none;margin:0;padding:0;counter-reset:og}
+.ordlist li{
+  display:grid;grid-template-columns:18px 1fr 56px 46px;gap:10px;align-items:baseline;
+  padding:7px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2);
+}
+.ordlist li:last-child{border-bottom:0;padding-bottom:0}
+.ordlist li::before{
+  counter-increment:og;content:counter(og);
+  font-family:var(--ff-mono);font-size:10.5px;color:var(--muted);
+}
+.ordlist em{font-style:normal;font-size:11.5px}
+.ordlist .on{
+  font-family:var(--ff-mono);font-variant-numeric:tabular-nums;
+  color:var(--ink);text-align:right;
+}
+.ordlist .op{
+  font-family:var(--ff-mono);font-size:11.5px;color:var(--muted);text-align:right;
+}
+
 /* attribution cascade */
 .cascade{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
 .cascade li{
@@ -486,15 +506,13 @@ img{max-width:100%}
     <h1>The refreshed <em>Infigratinib</em> targeting framework</h1>
     <p class="lede">
       The Infigratinib (Infi) achondroplasia HCP universe, refreshed for the Q3 2026 targeting cycle:
-      a consolidated NPI-keyed universe of <strong>31,225 HCPs</strong> across five key specialist segments,
-      scored on engagement decile, tiered on real patient evidence, rolled up to mastered HCOs, and sized
-      into a field call plan. This page is the index: what was built, the rules behind each step, and where the
+      a consolidated NPI-keyed universe of <strong>31,225 HCPs</strong>, scored on decile, tiered 1 to 5
+      on real patient evidence, rolled up to mastered HCOs, and sized into a field call plan. This page is the index: what was built, the rules behind each step, and where the
       documentation, code and final results live.
     </p>
     <dl class="hero-meta">
       <div><dt>Programme</dt><dd>Infigratinib (Infi)</dd></div>
       <div><dt>Indication</dt><dd>Achondroplasia (Q77.4)</dd></div>
-      <div><dt>Reference brand</dt><dd>Voxzogo / vosoritide</dd></div>
       <div><dt>Claims window</dt><dd>Apr 2023 to May 2026</dd></div>
       <div><dt>Targeting cycle</dt><dd>Q3 2026</dd></div>
       <div><dt>Prepared by</dt><dd>ProcDNA</dd></div>
@@ -568,7 +586,7 @@ img{max-width:100%}
 
     <div class="figs" style="margin-top:38px">
       <div class="fig"><div class="fig-n">31,225</div><div class="fig-l">HCPs in the refreshed universe</div></div>
-      <div class="fig"><div class="fig-n">~3.2K</div><div class="fig-l">Priority targets, Tiers 1-3</div></div>
+      <div class="fig"><div class="fig-n">3,173</div><div class="fig-l">Priority targets, Tiers 1-3</div></div>
       <div class="fig"><div class="fig-n">7,152</div><div class="fig-l">Net-new HCPs added</div></div>
       <div class="fig"><div class="fig-n">6,867</div><div class="fig-l">Mastered HCOs rolled up</div></div>
       <div class="fig"><div class="fig-n">179</div><div class="fig-l">Priority accounts, P1 + P2</div></div>
@@ -583,8 +601,8 @@ img{max-width:100%}
       <h2>How the pipeline fits together</h2>
     </div>
     <p class="sec-lede">
-      Seven steps run as one continuous chain. Each step&rsquo;s output is the next step&rsquo;s input, so a
-      re-run anywhere upstream requires re-running everything below it. Select any step to jump to its detail.
+      Seven steps run as one continuous chain. Each step&rsquo;s output is the next step&rsquo;s input.
+      Select any step to jump to its detail.
     </p>
 
     <div class="steps">
@@ -656,7 +674,7 @@ img{max-width:100%}
       <h2>Define HCP Universe</h2>
     </div>
     <p class="sec-lede">
-      The refreshed universe comprises 31,225 HCPs across five key specialist segments. Specialty is now
+      The refreshed universe comprises 31,225 HCPs across nine specialty groups. Specialty is now
       identified across multiple sources rather than a single one, which materially improved how many
       high-value Achon specialists the universe captures.
     </p>
@@ -668,10 +686,6 @@ img{max-width:100%}
       </div>
       <div class="callout">
         <b>~23% net-new.</b> 7,152 HCPs are new to the universe in the current refresh.
-      </div>
-      <div class="callout">
-        <b>Komodo drove the growth.</b> The Komodo source moved from ~11K to ~14K HCPs, adding three months
-        of incremental data through May 2026.
       </div>
     </div>
 
@@ -700,16 +714,16 @@ img{max-width:100%}
           Specialties are identified across DHC, Komodo and Veeva primary and secondary fields, then resolved
           to the most elevated group, first match wins.
         </p>
-        <ol style="margin:0;padding-left:20px;font-size:13.5px;color:var(--ink-2);line-height:1.9">
-          <li>Pediatric Endocrinologists</li>
-          <li>Geneticists</li>
-          <li>Pediatric Orthopedists</li>
-          <li>ENTs <span class="muted">- introduced this refresh</span></li>
-          <li>Pediatrics</li>
-          <li>Orthos</li>
-          <li>NP / PA</li>
-          <li>Endos</li>
-          <li>Others</li>
+        <ol class="ordlist">
+          <li><span>Pediatric Endocrinologists</span><span class="on">737</span><span class="op">2.4%</span></li>
+          <li><span>Geneticists</span><span class="on">484</span><span class="op">1.5%</span></li>
+          <li><span>Pediatric Orthopedists</span><span class="on">954</span><span class="op">3.1%</span></li>
+          <li><span>ENTs <em class="muted">new this refresh</em></span><span class="on">738</span><span class="op">2.4%</span></li>
+          <li><span>Pediatrics</span><span class="on">24,055</span><span class="op">77.0%</span></li>
+          <li><span>Orthos</span><span class="on">110</span><span class="op">0.4%</span></li>
+          <li><span>NP / PA</span><span class="on">568</span><span class="op">1.8%</span></li>
+          <li><span>Endos</span><span class="on">8</span><span class="op">&lt;0.1%</span></li>
+          <li><span>Others</span><span class="on">3,571</span><span class="op">11.4%</span></li>
         </ol>
         <div class="assume">
           <b>Patch logic.</b> HCPs are further elevated into Ped Endos, Geneticists and Ped Orthos using VOD
@@ -738,8 +752,8 @@ img{max-width:100%}
         <h3>How the decile is built</h3>
         <ul class="kv">
           <li><span class="k">Veeva decile</span><span class="v">Q77.4 patients + claims</span></li>
-          <li><span class="k">Komodo decile</span><span class="v">Q77.4 claims + patients</span></li>
-          <li><span class="k">DHC decile</span><span class="v">Q77.4 Mx + patients</span></li>
+          <li><span class="k">Komodo decile</span><span class="v">Q77.4 patients + claims</span></li>
+          <li><span class="k">DHC decile</span><span class="v">Q77.4 patients + claims</span></li>
           <li><span class="k">Final decile</span><span class="v">Best of the three</span></li>
         </ul>
         <p class="note" style="margin-top:18px;border:0;padding:0">
@@ -749,7 +763,7 @@ img{max-width:100%}
       </div>
 
       <div class="panel">
-        <h3>Initial tier rules, first match wins</h3>
+        <h3>Initial tier rules</h3>
         <div class="tscroll" style="border:0">
           <table style="min-width:0">
             <tbody>
@@ -800,19 +814,22 @@ img{max-width:100%}
         <dl class="speclist">
           <div>
             <dt>Q77.4 arm</dt>
-            <dd>&ge;&nbsp;1 Q77.4 diagnosis on an office E&amp;M visit, and &ge;&nbsp;2 distinct service dates</dd>
+            <dd>&ge;&nbsp;1 Q77.4 diagnosis on an office E&amp;M visit <strong>and</strong> &ge;&nbsp;2 distinct
+              Q77.4 service dates overall. The second date may carry any procedure code.</dd>
           </div>
           <div>
             <dt>Voxzogo arm</dt>
-            <dd>&ge;&nbsp;1 pharmacy fill of Voxzogo or vosoritide</dd>
+            <dd>Any pharmacy claim where brand = VOXZOGO or generic = VOSORITIDE</dd>
           </div>
           <div>
             <dt>Age scope</dt>
-            <dd>2 to 18 years, the on-label pediatric population</dd>
+            <dd>Patient age (2026 minus year of birth) of 2 to 18 years, the on-label pediatric population</dd>
           </div>
           <div>
             <dt>Treatment</dt>
-            <dd>Active &middot; Discontinued &middot; Never treated</dd>
+            <dd><strong>Never Treated</strong> no Voxzogo fill of any kind &middot;
+              <strong>Active</strong> last fill on or after (max fill date minus 3 months) &middot;
+              <strong>Discontinued</strong> last fill older than that cutoff</dd>
           </div>
         </dl>
       </div>
@@ -870,8 +887,8 @@ img{max-width:100%}
     </div>
 
     <div class="assume" style="max-width:none">
-      <b>Priority tiers (~3.2K).</b> The patient-touchpoint threshold was updated to <b>&ge; 7</b> to land the
-      final pool at approximately 3.2K targets across Tiers 1 to 3.
+      <b>Priority tiers: 3,173 HCPs.</b> The patient-touchpoint threshold was updated to <b>&ge; 7</b> to land
+      the final pool at 3,173 targets across Tiers 1 to 3 (742 + 1,144 + 1,287).
     </div>
   </div>
 </section>
@@ -933,8 +950,9 @@ img{max-width:100%}
       <div class="panel">
         <h3>Priority tiering method</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          Signal-bearing HCOs are clustered on log-scaled opportunity and quality features, then ranked
-          by mean signal. HCOs with no signal at all skip clustering entirely.
+          Signal-bearing HCOs are log-scaled, standardised, then clustered with k-means (k = 3, fixed
+          seed) on opportunity and quality features and ranked by mean signal. HCOs failing every signal
+          check skip clustering and go straight to P4-Minimal.
         </p>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
           Deterministic patient-volume floors then run in order, and the result is frozen so future rollups
@@ -956,10 +974,10 @@ img{max-width:100%}
       <table>
         <thead><tr><th>HCO priority tier</th><th>Definition</th></tr></thead>
         <tbody>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1 - Elite</td><td>Top cluster among signal-bearing HCOs, or promoted by the elite patient-volume floor</td></tr>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>P2 - Strong</td><td>Middle cluster retained on the volume floor, or promoted from below on patient volume</td></tr>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3 - Tail</td><td>Remaining signal-bearing HCOs</td></tr>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>P4 - Minimal</td><td>No target HCPs, patients, Tier 1/2 HCPs or claim exposure</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1 - Elite</td><td>Top k-means cluster among signal-bearing HCOs (highest mean standardised opportunity + quality signal), <strong>or</strong> any HCO promoted by the &ge; 20 unique-patient elite floor</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>P2 - Strong</td><td>Middle cluster, retained only if &ge; 3 unique patients <strong>or</strong> &ge; 1 treated patient; demoted back to P3 at freeze time if it fails the stricter floor of &ge; 6 unique <strong>or</strong> &ge; 1 treated. Any P3/P4 with &ge; 6 unique patients is promoted up to P2</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3 - Tail</td><td>Remaining signal-bearing HCOs: the lowest cluster, or a P2 candidate that failed its retention floor</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>P4 - Minimal</td><td>No signal at all: fails all four of target HCPs affiliated &ge; 1, unique patients &ge; 1, Tier 1/2 HCPs affiliated &ge; 1, ungated Q77.4 claims &ge; 3</td></tr>
         </tbody>
       </table>
     </div>
