@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="BridgeBio Infi achondroplasia HCP universe refresh and targeting framework - methodology, tiering rules, account prioritization and field workload index.">
+<meta name="color-scheme" content="light dark">
+<title>Infi Achon Targeting Refresh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* ============ tokens : light (complete set) ============ */
+:root{
+  --paper:#f4f7f7;
+  --surface:#ffffff;
+  --surface-sunk:#eef3f3;
+  --ink:#12191f;
+  --ink-2:#31424a;
+  --muted:#5a6a70;
+  --line:#dce4e5;
+  --line-strong:#c2d0d2;
+
+  /* the tier ramp IS the palette : one hue, dark -> light, T1 -> T5 */
+  --t1:#0a4a4f;
+  --t2:#0f6f76;
+  --t3:#3f9aa0;
+  --t4:#8ec4c8;
+  --t5:#cfe2e3;
+
+  --accent:#0f6f76;
+  --accent-ink:#0a4a4f;
+  --accent-wash:#e4efef;
+
+  --up:#1c7a51;
+  --down:#b8422f;
+
+  --shadow-card:0 1px 2px rgba(18,25,31,.05), 0 8px 24px -14px rgba(10,74,79,.35);
+  --shadow-lift:0 2px 4px rgba(18,25,31,.07), 0 18px 40px -20px rgba(10,74,79,.45);
+
+  --maxw:1120px;
+  --prose:68ch;
+}
+/* dark : OS preference, unless an explicit light choice is stamped */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0b1113;
+    --surface:#121b1e;
+    --surface-sunk:#0e1618;
+    --ink:#e7eef0;
+    --ink-2:#bccacd;
+    --muted:#8ea0a4;
+    --line:#223034;
+    --line-strong:#33454a;
+
+    --t1:#7fd4da;
+    --t2:#58b2b9;
+    --t3:#3c8990;
+    --t4:#2a636a;
+    --t5:#1d454b;
+
+    --accent:#63c3ca;
+    --accent-ink:#8fd8de;
+    --accent-wash:#14282b;
+
+    --up:#4cb583;
+    --down:#e08268;
+
+    --shadow-card:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 18px 40px -20px rgba(0,0,0,.8);
+  }
+}
+/* dark : explicit choice wins over a light OS */
+:root[data-theme="dark"]{
+  --paper:#0b1113;
+  --surface:#121b1e;
+  --surface-sunk:#0e1618;
+  --ink:#e7eef0;
+  --ink-2:#bccacd;
+  --muted:#8ea0a4;
+  --line:#223034;
+  --line-strong:#33454a;
+
+  --t1:#7fd4da;
+  --t2:#58b2b9;
+  --t3:#3c8990;
+  --t4:#2a636a;
+  --t5:#1d454b;
+
+  --accent:#63c3ca;
+  --accent-ink:#8fd8de;
+  --accent-wash:#14282b;
+
+  --up:#4cb583;
+  --down:#e08268;
+
+  --shadow-card:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.7);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 18px 40px -20px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:15px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:20px}
+
+/* ============ nav ============ */
+.nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{
+  max-width:var(--maxw);margin-inline:auto;padding:0 20px;
+  display:flex;align-items:center;gap:24px;min-height:52px;flex-wrap:wrap;
+}
+.nav-mark{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent-ink);font-weight:500;white-space:nowrap;
+}
+.nav-links{display:flex;gap:18px;flex-wrap:wrap;margin-left:auto}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;
+  padding:4px 0;border-bottom:1.5px solid transparent;
+}
+.nav-links a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* ============ hero ============ */
+.hero{padding-block:52px 40px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-ink);margin:0 0 18px;
+}
+h1{
+  font-family:Newsreader,Georgia,"Times New Roman",serif;
+  font-weight:500;font-size:clamp(34px,5.4vw,54px);line-height:1.08;
+  letter-spacing:-.015em;margin:0 0 18px;text-wrap:balance;max-width:16ch;
+}
+h1 em{font-style:italic;color:var(--accent-ink)}
+.lede{font-size:17px;color:var(--ink-2);max-width:var(--prose);margin:0 0 8px}
+.hero-meta{
+  display:flex;gap:10px 24px;flex-wrap:wrap;margin-top:22px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);
+}
+.hero-meta span{white-space:nowrap}
+
+/* ============ resource links ============ */
+.res{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;margin-top:34px;
+}
+.res-card{
+  display:flex;flex-direction:column;gap:6px;
+  background:var(--surface);border:1px solid var(--line-strong);
+  border-left:3px solid var(--accent);
+  border-radius:3px;padding:20px 22px;
+  text-decoration:none;color:inherit;
+  box-shadow:var(--shadow-card);
+  transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+}
+.res-card:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px);border-color:var(--accent)}
+.res-kind{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.res-name{
+  font-family:Newsreader,Georgia,serif;font-size:21px;font-weight:500;
+  line-height:1.2;color:var(--ink);
+}
+.res-desc{font-size:13.5px;color:var(--muted);line-height:1.5}
+.res-go{
+  margin-top:8px;font-size:12.5px;font-weight:600;color:var(--accent-ink);
+  display:flex;align-items:center;gap:6px;
+}
+.res-go svg{width:13px;height:13px;flex:none}
+
+/* ============ figure strip ============ */
+.figs{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.fig{padding:26px 24px 26px 0;border-right:1px solid var(--line)}
+.fig:last-child{border-right:0}
+.fig-n{
+  font-family:Newsreader,Georgia,serif;font-size:36px;font-weight:500;
+  line-height:1;letter-spacing:-.02em;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.fig-l{
+  font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.4;
+}
+
+/* ============ sections ============ */
+section{padding-block:56px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:2px;padding:3px 8px;
+  white-space:nowrap;
+}
+h2{
+  font-family:Newsreader,Georgia,serif;font-weight:500;
+  font-size:clamp(25px,3.4vw,34px);line-height:1.15;letter-spacing:-.012em;
+  margin:0;text-wrap:balance;
+}
+h3{
+  font-family:"IBM Plex Sans",sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);
+  margin:0 0 14px;
+}
+.sec-lede{font-size:15.5px;color:var(--ink-2);max-width:var(--prose);margin:0 0 30px}
+p{margin:0 0 14px;max-width:var(--prose)}
+.muted{color:var(--muted)}
+code,.mono{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.88em;
+}
+code{
+  background:var(--surface-sunk);border:1px solid var(--line);
+  border-radius:2px;padding:1px 5px;color:var(--ink-2);
+  overflow-wrap:anywhere;
+}
+
+/* ============ pipeline rail ============ */
+.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;margin-top:8px}
+.pipe-stage{
+  background:var(--surface);border:1px solid var(--line);
+  padding:22px;display:flex;flex-direction:column;gap:10px;
+}
+.pipe-stage:first-child{border-radius:3px 0 0 3px}
+.pipe-stage:last-child{border-radius:0 3px 3px 0}
+.pipe-tag{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.pipe-title{font-family:Newsreader,Georgia,serif;font-size:19px;font-weight:500;line-height:1.25}
+.pipe-body{font-size:13.5px;color:var(--muted);line-height:1.55;flex:1}
+.pipe-out{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+  color:var(--accent-ink);border-top:1px solid var(--line);padding-top:10px;
+  overflow-wrap:anywhere;
+}
+
+/* ============ version chain ============ */
+.chain{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 26px;padding:0;list-style:none}
+.chain li{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+  background:var(--surface);border:1px solid var(--line-strong);
+  border-radius:2px;padding:5px 9px;color:var(--ink-2);white-space:nowrap;
+}
+.chain li b{color:var(--accent-ink);font-weight:500}
+
+/* ============ bar chart ============ */
+.chart{margin:0 0 6px;max-width:660px}
+.chart-title{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.chart-sub{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar-row{
+  display:grid;grid-template-columns:104px 1fr 92px;align-items:center;gap:12px;
+  position:relative;border-radius:2px;
+}
+.bar-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.bar-lab{
+  font-size:12.5px;color:var(--ink-2);text-align:right;line-height:1.25;
+}
+.bar-lab b{display:block;font-weight:600;color:var(--ink)}
+.bar-track{
+  display:block;height:20px;background:var(--surface-sunk);
+  border-radius:2px;position:relative;overflow:hidden;
+}
+.bar-fill{
+  display:block;height:100%;border-radius:2px 4px 4px 2px;min-width:3px;
+  transition:filter .18s ease;
+}
+.bar-row:hover .bar-fill,.bar-row:focus-visible .bar-fill{filter:brightness(1.08) saturate(1.1)}
+.bar-val{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;
+  font-variant-numeric:tabular-nums;color:var(--ink);
+}
+.bar-val span{color:var(--muted);font-size:11.5px}
+.bar-tip{
+  position:absolute;left:116px;bottom:calc(100% + 6px);z-index:20;
+  background:var(--ink);color:var(--paper);
+  font-size:12px;line-height:1.45;padding:7px 11px;border-radius:3px;
+  white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .14s ease;box-shadow:var(--shadow-lift);
+}
+.bar-row:hover .bar-tip,.bar-row:focus-visible .bar-tip{opacity:1}
+.legend{
+  display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;
+  font-size:12px;color:var(--muted);
+}
+.legend i{
+  width:10px;height:10px;border-radius:2px;display:inline-block;
+  margin-right:6px;vertical-align:-1px;
+}
+
+/* ============ tables ============ */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;background:var(--surface-sunk);
+  white-space:nowrap;position:sticky;top:0;
+}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rule-t{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;
+  white-space:nowrap;
+}
+.dot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:7px;vertical-align:0}
+
+/* ============ split / cards ============ */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:2px}
+.panel{background:var(--surface);border:1px solid var(--line);padding:22px}
+.panel h3{margin-bottom:12px}
+.panel p:last-child{margin-bottom:0}
+.kv{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.kv li{display:flex;justify-content:space-between;gap:16px;font-size:13.5px;align-items:baseline}
+.kv .k{color:var(--muted)}
+.kv .v{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;
+  font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;
+}
+.delta-up{color:var(--up);font-weight:600}
+.delta-down{color:var(--down);font-weight:600}
+
+/* formula block */
+.formula{
+  background:var(--surface);border:1px solid var(--line-strong);
+  border-left:3px solid var(--accent);border-radius:3px;
+  padding:18px 20px;margin:0 0 20px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;
+  line-height:1.75;color:var(--ink-2);overflow-x:auto;
+}
+.formula b{color:var(--accent-ink);font-weight:500}
+
+.note{
+  border-left:2px solid var(--line-strong);padding-left:16px;
+  font-size:13.5px;color:var(--muted);max-width:var(--prose);margin:22px 0 0;
+}
+
+/* footer */
+footer{padding-block:38px 46px;color:var(--muted);font-size:12.5px}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:baseline}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap}
+
+@media (max-width:640px){
+  .fig{padding:20px 16px 20px 0}
+  .bar-row{grid-template-columns:82px 1fr 78px;gap:9px}
+  .bar-tip{left:0}
+  section{padding-block:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .res-card:hover{transform:none}
+}
+</style>
+<style>
+/* standalone baseline - supplied by the host platform when embedded */
+:root{
+  padding-top:env(safe-area-inset-top, 0px);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-in">
+    <div class="nav-mark">BridgeBio &middot; Infi Achon</div>
+    <div class="nav-links">
+      <a href="#resources">Resources</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#universe">Universe</a>
+      <a href="#deciling">Deciling</a>
+      <a href="#targeting">Targeting</a>
+      <a href="#affiliation">Accounts</a>
+      <a href="#workload">Workload</a>
+      <a href="#impact">Impact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">HCP Universe Refresh &amp; Targeting &middot; Achondroplasia</p>
+    <h1>The refreshed <em>Infi</em> targeting framework</h1>
+    <p class="lede">
+      Thirteen data sources resolved into one NPI-keyed universe of <strong>31,225 HCPs</strong>, scored on
+      engagement decile, tiered on real patient evidence, rolled up to mastered accounts, and sized into a
+      field call plan. This page is the index: what was built, the rules behind each step, and where the
+      signed-off documentation and code live.
+    </p>
+    <div class="hero-meta">
+      <span>Therapy area &mdash; Achondroplasia (Q77.4)</span>
+      <span>Brand &mdash; Voxzogo / vosoritide</span>
+      <span>Claims through May 2026</span>
+      <span>Prepared by ProcDNA</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ RESOURCES ============ -->
+<section id="resources" style="border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>Documentation &amp; code</h2>
+    </div>
+    <p class="sec-lede">
+      Every rule on this page is specified in the business rules documents and implemented in the Databricks
+      notebooks. Both sets live in the project SharePoint.
+    </p>
+
+    <div class="res">
+      <a class="res-card" href="https://procdna.sharepoint.com/:f:/r/sites/0176_BridgebioAd-HocAnalyticsSupportH1%2726_0176CA0008/Documents/General/13%20Infi%20Achon%20HCP%20Universe%20Refresh%20%26%20Targeting/05%20PDNA%20Codes%20%26%20Business%20Rules%20Documents/PDNA%20Achon%20Business%20Rules%20Documents?d=wb96755c0506540c68a58e54741264dfc&amp;csf=1&amp;web=1&amp;e=ZKTnLJ" target="_blank" rel="noopener">
+        <span class="res-kind">SharePoint folder</span>
+        <span class="res-name">Business Rules Documents</span>
+        <span class="res-desc">
+          Four methodology documents &mdash; end-to-end framework, HCP universe build, target tier assignment,
+          and account rollup / prioritization / workload. Every threshold, cascade and QC gate.
+        </span>
+        <span class="res-go">
+          Open folder
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+        </span>
+      </a>
+
+      <a class="res-card" href="https://procdna.sharepoint.com/:f:/r/sites/0176_BridgebioAd-HocAnalyticsSupportH1%2726_0176CA0008/Documents/General/13%20Infi%20Achon%20HCP%20Universe%20Refresh%20%26%20Targeting/05%20PDNA%20Codes%20%26%20Business%20Rules%20Documents/PDNA%20Achon%20Codes?d=w70bf25e39f51430b913bab11d5867bd1&amp;csf=1&amp;web=1&amp;e=lDiy4Z" target="_blank" rel="noopener">
+        <span class="res-kind">SharePoint folder</span>
+        <span class="res-name">Code &amp; Execution Pipeline</span>
+        <span class="res-desc">
+          Databricks notebooks for the universe build, target tier workbook, account rollup pipeline,
+          priority-tier Python, and the workload index &mdash; in run order.
+        </span>
+        <span class="res-go">
+          Open folder
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg>
+        </span>
+      </a>
+    </div>
+
+    <div class="figs" style="margin-top:38px">
+      <div class="fig"><div class="fig-n">31,225</div><div class="fig-l">HCPs in the refreshed universe</div></div>
+      <div class="fig"><div class="fig-n">3,173</div><div class="fig-l">Priority targets, Tiers&nbsp;1&ndash;3</div></div>
+      <div class="fig"><div class="fig-n">13</div><div class="fig-l">Source extracts consolidated</div></div>
+      <div class="fig"><div class="fig-n">6,867</div><div class="fig-l">Mastered accounts rolled up</div></div>
+      <div class="fig"><div class="fig-n">179</div><div class="fig-l">Priority accounts, P1&nbsp;+&nbsp;P2</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIPELINE ============ -->
+<section id="pipeline">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>How the pipeline fits together</h2>
+    </div>
+    <p class="sec-lede">
+      Three stages run as one continuous chain. Each stage&rsquo;s output table is the next stage&rsquo;s input,
+      so a re-run anywhere upstream requires re-running everything below it.
+    </p>
+
+    <div class="pipe">
+      <div class="pipe-stage">
+        <span class="pipe-tag">Stage 1</span>
+        <span class="pipe-title">HCP Universe Build</span>
+        <span class="pipe-body">
+          Thirteen extracts validated on NPI, resolved to one specialty and one name per HCP, scored on a
+          three-source engagement decile, then classified into an interim tier 1&ndash;4.
+        </span>
+        <span class="pipe-out">&rarr; hcp_universe_updated_v6</span>
+      </div>
+      <div class="pipe-stage">
+        <span class="pipe-tag">Stage 2</span>
+        <span class="pipe-title">Target Tier Assignment</span>
+        <span class="pipe-body">
+          A patient cohort is built, treatment status attached, and an 8-cycle cascade picks one primary HCP
+          per patient. Patient evidence then converts the static tier into a field-ready target tier 1&ndash;5.
+        </span>
+        <span class="pipe-out">&rarr; hcp_universe_updated_v7</span>
+      </div>
+      <div class="pipe-stage">
+        <span class="pipe-tag">Stage 3</span>
+        <span class="pipe-title">Accounts &amp; Field Workload</span>
+        <span class="pipe-body">
+          The target universe is frozen for reproducibility, rolled up to mastered accounts, clustered into
+          priority tiers P1&ndash;P4, then enriched with affiliation, specialty and territory to size call capacity.
+        </span>
+        <span class="pipe-out">&rarr; account_rollup &middot; v10 &middot; workload_index</span>
+      </div>
+    </div>
+
+    <p class="note">
+      <strong>One naming caution.</strong> Three different scales are informally called &ldquo;tier&rdquo;:
+      <code>tier</code> (Stage&nbsp;1, 1&ndash;4, specialty and decile), <code>target_tier</code>
+      (Stage&nbsp;2, 1&ndash;5, patient evidence) and <code>priority_tier</code> (Stage&nbsp;3,
+      P1&ndash;P4, account grain). Always reference the fully-qualified column name.
+    </p>
+  </div>
+</section>
+
+<!-- ============ UNIVERSE ============ -->
+<section id="universe">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>Building the universe</h2>
+    </div>
+    <p class="sec-lede">
+      Every source is validated on a 10-digit NPI before use, then full-outer-joined so an HCP present in any
+      single source is retained. The build moves through six numbered versions &mdash; a genuine sequence,
+      each one adding a single decision.
+    </p>
+
+    <ul class="chain">
+      <li><b>v1</b> &nbsp;join + specialty + name</li>
+      <li><b>v1+</b> &nbsp;VOD patch &amp; manual adds</li>
+      <li><b>v2</b> &nbsp;treater flag</li>
+      <li><b>v3</b> &nbsp;noise pruning</li>
+      <li><b>v4</b> &nbsp;decile scoring</li>
+      <li><b>v5</b> &nbsp;cleanup + Q77.4 flag</li>
+      <li><b>v6</b> &nbsp;tier 1&ndash;4</li>
+    </ul>
+
+    <div class="split" style="margin-bottom:34px">
+      <div class="panel">
+        <h3>Where the HCPs come from</h3>
+        <ul class="kv">
+          <li><span class="k">Komodo claims</span><span class="v">14,055</span></li>
+          <li><span class="k">Veeva (MDB + Compass)</span><span class="v">13,963</span></li>
+          <li><span class="k">DHC / Definitive</span><span class="v">2,913</span></li>
+          <li><span class="k">Medical &amp; KOL list</span><span class="v">134</span></li>
+          <li><span class="k">Vox prescribers &amp; treaters</span><span class="v">107</span></li>
+          <li><span class="k">Ortho additions</span><span class="v">49</span></li>
+          <li><span class="k">Manual high-value adds</span><span class="v">4</span></li>
+        </ul>
+        <p class="note" style="margin-top:18px;border:0;padding:0">
+          Komodo is read from a frozen snapshot rather than the live feed, so the build stays reproducible
+          between runs.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>Specialty resolution order</h3>
+        <p class="muted" style="font-size:13.5px;margin-bottom:14px">
+          Each source classifies its own specialty text first; results are pooled across sources and resolved
+          by priority, first match wins. Two composite rules fire on a pair of weaker labels appearing together.
+        </p>
+        <ol style="margin:0;padding-left:20px;font-size:13.5px;color:var(--ink-2);line-height:1.9">
+          <li>Pediatric Endocrinologists <span class="muted">&mdash; composite</span></li>
+          <li>Geneticists</li>
+          <li>Pediatric Orthopedists <span class="muted">&mdash; composite</span></li>
+          <li>Otolaryngologists <span class="muted">&mdash; added this refresh</span></li>
+          <li>Pediatrics</li>
+          <li>Orthopedists</li>
+          <li>NP / PA</li>
+          <li>Endocrinologists</li>
+          <li>Others <span class="muted">&mdash; fallback</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <h3>Specialty mix of the refreshed universe</h3>
+    <div class="tscroll">
+      <table>
+        <thead>
+          <tr><th>Specialty group</th><th class="num">HCPs</th><th>What changed this refresh</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pediatric Endocrinologists</td><td class="num">737</td><td>Multi-source capture plus VOD patch logic</td></tr>
+          <tr><td>Geneticists</td><td class="num">484</td><td>Multi-source capture plus VOD patch logic</td></tr>
+          <tr><td>Pediatric Orthopedists</td><td class="num">954</td><td>Composite rule lifts Peds&nbsp;+&nbsp;Ortho pairs</td></tr>
+          <tr><td>Otolaryngologists (ENT)</td><td class="num">738</td><td>Introduced as a standalone group</td></tr>
+          <tr><td>Pediatrics</td><td class="num">24,055</td><td>Bulk of the Komodo refresh volume</td></tr>
+          <tr><td>Orthopedists</td><td class="num">110</td><td>&mdash;</td></tr>
+          <tr><td>NP / PA</td><td class="num">568</td><td>&mdash;</td></tr>
+          <tr><td>Endocrinologists</td><td class="num">8</td><td>&mdash;</td></tr>
+          <tr><td>Others</td><td class="num">3,571</td><td>Share cut from 73% to ~50% vs. VOD-only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      A <strong>patch rule</strong> lets VOD override the pooled result when VOD identifies a Ped Endo,
+      Geneticist or Ped Ortho but the cross-source result landed on something weaker. Five named high-value
+      HCPs are merged in by hand, and one alternate-source NPI is carved in explicitly.
+    </p>
+  </div>
+</section>
+
+<!-- ============ DECILING ============ -->
+<section id="deciling">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>Deciling &amp; initial tiering</h2>
+    </div>
+    <p class="sec-lede">
+      Three independent deciles are computed &mdash; one per claims source &mdash; and the best of the three
+      is kept, so an HCP gets credit for whichever source shows the strongest relative engagement.
+    </p>
+
+    <div class="split" style="margin-bottom:32px">
+      <div class="panel">
+        <h3>How the decile is built</h3>
+        <ul class="kv">
+          <li><span class="k">Veeva decile</span><span class="v">Q77.4 patients + claims</span></li>
+          <li><span class="k">Komodo decile</span><span class="v">Q77.4 claims + patients</span></li>
+          <li><span class="k">DHC decile</span><span class="v">Q77.4 Mx + patients</span></li>
+          <li><span class="k">final_decile</span><span class="v">GREATEST of the three</span></li>
+        </ul>
+        <p class="note" style="margin-top:18px;border:0;padding:0">
+          Each metric is normalised to a share of its column total, ranked descending, and mapped to a
+          1&ndash;10 band on cumulative share. HCPs with volume floor at decile&nbsp;1; HCPs with none sit at&nbsp;0.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>Initial tier rules &mdash; first match wins</h3>
+        <div class="tscroll" style="border:0">
+          <table style="min-width:0">
+            <tbody>
+              <tr>
+                <td class="rule-t"><i class="dot" style="background:var(--t1)"></i>Tier 1</td>
+                <td>KOL/QED flagged <strong>or</strong> known treater <strong>or</strong> decile&nbsp;&ge;&nbsp;5 and Ped&nbsp;Endo/Geneticist</td>
+              </tr>
+              <tr>
+                <td class="rule-t"><i class="dot" style="background:var(--t2)"></i>Tier 2</td>
+                <td>Decile&nbsp;&lt;&nbsp;5 Ped&nbsp;Endo/Geneticist <strong>or</strong> decile&nbsp;&ge;&nbsp;8</td>
+              </tr>
+              <tr>
+                <td class="rule-t"><i class="dot" style="background:var(--t3)"></i>Tier 3</td>
+                <td>Decile&nbsp;&le;&nbsp;7 and generates Q77.4 claims <strong>or</strong> decile&nbsp;5&ndash;7</td>
+              </tr>
+              <tr>
+                <td class="rule-t"><i class="dot" style="background:var(--t4)"></i>Tier 4</td>
+                <td>Fallback &mdash; none of the above</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:0">
+      No HCP generating a Q77.4 claim lands in the bottom tier, and no Ped&nbsp;Endo or Geneticist falls below
+      Tier&nbsp;2 &mdash; both QC gates confirmed on the refreshed build.
+    </p>
+  </div>
+</section>
+
+<!-- ============ TARGETING ============ -->
+<section id="targeting">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>Patient attribution &amp; target tiers</h2>
+    </div>
+    <p class="sec-lede">
+      Specialty alone doesn&rsquo;t earn a field call. This stage layers in who each HCP is actually
+      attributed to, and how many patients they have genuinely touched.
+    </p>
+
+    <div class="split" style="margin-bottom:32px">
+      <div class="panel">
+        <h3>Patient cohort</h3>
+        <ul class="kv">
+          <li><span class="k">Q77.4 arm</span><span class="v">&ge;1 office E&amp;M + &ge;2 dates</span></li>
+          <li><span class="k">Voxzogo arm</span><span class="v">&ge;1 Vox / vosoritide fill</span></li>
+          <li><span class="k">Age scope</span><span class="v">2&ndash;18 years</span></li>
+          <li><span class="k">Treatment status</span><span class="v">Active / Discont. / Never</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Attribution cascade &mdash; lowest cycle wins</h3>
+        <ol style="margin:0;padding-left:20px;font-size:13.5px;color:var(--ink-2);line-height:1.8">
+          <li>Tier&nbsp;1/2 Ped Endo or Geneticist, qualifying visit</li>
+          <li>Vox prescriber, gated on a qualifying visit</li>
+          <li>Tier&nbsp;1/2, other specialty</li>
+          <li>Tier&nbsp;3/4</li>
+          <li>Tier&nbsp;5</li>
+          <li>Visited HCP outside the universe</li>
+          <li>Vox-prescriber stop-gap <span class="muted">&mdash; not visit-gated</span></li>
+          <li>Incidence-treater stop-gap <span class="muted">&mdash; last resort</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <p>
+      A rendered 3-year Q77.4 visit is required for any attribution &mdash; a Voxzogo fill alone no longer
+      qualifies. Ties within a cycle break on office E&amp;M visits first, so a clinician who actually sees the
+      patient in clinic outranks high-frequency home-health billing.
+    </p>
+
+    <h3 style="margin-top:34px">The target tier rule</h3>
+    <div class="tscroll" style="margin-bottom:30px">
+      <table>
+        <thead><tr><th>Target tier</th><th>Rule</th><th class="num">HCPs</th></tr></thead>
+        <tbody>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>Tier 1</td><td>Carries original tier 1 &mdash; unchanged</td><td class="num">742</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>Tier 2</td><td>Carries original tier 2 &mdash; unchanged</td><td class="num">1,144</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>Tier 3</td><td>Attributed patients &gt; 0 <strong>or</strong> patients touched &ge; 7</td><td class="num">1,287</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>Tier 4</td><td>No patient evidence, original tier 3</td><td class="num">10,733</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t5)"></i>Tier 5</td><td>No patient evidence, original tier 4</td><td class="num">17,319</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart">
+      <div class="chart-title">Target tier distribution</div>
+      <div class="chart-sub">31,225 HCPs &middot; Tiers 1&ndash;3 form the 3,173 priority target pool</div>
+      <div class="bars">
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>Tier 1</b>KOLs &amp; treaters</span>
+          <span class="bar-track"><span class="bar-fill" style="width:4.3%;background:var(--t1)"></span></span>
+          <span class="bar-val">742 <span>2%</span></span>
+          <span class="bar-tip">Tier 1 &middot; 742 HCPs &middot; 2% of universe &mdash; KOLs, treaters &amp; high-exposure Ped Endos / Geneticists</span>
+        </div>
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>Tier 2</b>Non-treating specialists</span>
+          <span class="bar-track"><span class="bar-fill" style="width:6.6%;background:var(--t2)"></span></span>
+          <span class="bar-val">1,144 <span>4%</span></span>
+          <span class="bar-tip">Tier 2 &middot; 1,144 HCPs &middot; 4% &mdash; non-treating Ped Endos &amp; Geneticists plus high-exposure HCPs</span>
+        </div>
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>Tier 3</b>Medium exposure</span>
+          <span class="bar-track"><span class="bar-fill" style="width:7.4%;background:var(--t3)"></span></span>
+          <span class="bar-val">1,287 <span>4%</span></span>
+          <span class="bar-tip">Tier 3 &middot; 1,287 HCPs &middot; 4% &mdash; Ped Orthos, ENTs &amp; Pediatrics with medium exposure</span>
+        </div>
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>Tier 4</b>Higher Q77.4 claims</span>
+          <span class="bar-track"><span class="bar-fill" style="width:62%;background:var(--t4)"></span></span>
+          <span class="bar-val">10,733 <span>34%</span></span>
+          <span class="bar-tip">Tier 4 &middot; 10,733 HCPs &middot; 34% &mdash; Pediatrics and others with higher Q77.4 claim volume</span>
+        </div>
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>Tier 5</b>Low exposure</span>
+          <span class="bar-track"><span class="bar-fill" style="width:100%;background:var(--t5)"></span></span>
+          <span class="bar-val">17,319 <span>55%</span></span>
+          <span class="bar-tip">Tier 5 &middot; 17,319 HCPs &middot; 55% &mdash; low-exposure HCPs carrying Q77.4 claims</span>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--t1)"></i>Priority tiers &mdash; in the call plan</span>
+        <span><i style="background:var(--t5)"></i>Non-target &mdash; excluded from workload</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACCOUNTS ============ -->
+<section id="affiliation">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2>Affiliation, account rollup &amp; prioritization</h2>
+    </div>
+    <p class="sec-lede">
+      Before any rollup, the target universe is frozen at 3,173 HCPs. Komodo claims change over time, and
+      without that lock, target counts and every downstream account number would drift between runs.
+    </p>
+
+    <div class="split" style="margin-bottom:32px">
+      <div class="panel">
+        <h3>HCP &rarr; account affiliation</h3>
+        <p style="font-size:13.5px;color:var(--ink-2)">
+          Accounts resolve from a single mastered NPI-to-account table &mdash; the earlier name-matching
+          crosswalk is retired, and placeholder values are converted to true nulls so an HCP with no genuine
+          affiliation is excluded rather than grouped under a dash.
+        </p>
+        <ul class="kv" style="margin-top:16px">
+          <li><span class="k">Targets without a mastered HCO</span><span class="v">351</span></li>
+          <li><span class="k">Recovered by fuzzy match + manual</span><span class="v delta-up">+178</span></li>
+          <li><span class="k">Still unmapped</span><span class="v">173</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Priority tiering method</h3>
+        <p style="font-size:13.5px;color:var(--ink-2)">
+          Signal-bearing accounts are clustered with k-means on log-scaled opportunity and quality features,
+          ranked by mean signal. Accounts with no signal at all skip clustering entirely.
+        </p>
+        <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
+          Three deterministic floors then run in order, and the result is frozen so future rollups restore the
+          locked tier rather than re-clustering and drifting.
+        </p>
+      </div>
+    </div>
+
+    <h3>Account priority tiers</h3>
+    <div class="tscroll" style="margin-bottom:30px">
+      <table>
+        <thead><tr><th>Priority tier</th><th>Definition</th><th class="num">Accounts</th></tr></thead>
+        <tbody>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1&nbsp;&ndash;&nbsp;Elite</td><td>Top cluster, or any account with &ge;&nbsp;20 unique patients</td><td class="num">94</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>P2&nbsp;&ndash;&nbsp;Strong</td><td>Middle cluster retained on the volume floor, or promoted at &ge;&nbsp;6 unique patients</td><td class="num">85</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3&nbsp;&ndash;&nbsp;Tail</td><td>Remaining signal-bearing accounts</td><td class="num">1,808</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>P4&nbsp;&ndash;&nbsp;Minimal</td><td>No target HCPs, patients, Tier&nbsp;1/2 HCPs or claim exposure</td><td class="num">4,880</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart">
+      <div class="chart-title">Account priority distribution</div>
+      <div class="chart-sub">6,867 mastered accounts &middot; 179 sit in the priority set</div>
+      <div class="bars">
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>P1 Elite</b></span>
+          <span class="bar-track"><span class="bar-fill" style="width:1.9%;background:var(--t1)"></span></span>
+          <span class="bar-val">94 <span>1%</span></span>
+          <span class="bar-tip">P1-Elite &middot; 94 accounts &middot; top cluster plus the 20-patient elite floor</span>
+        </div>
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>P2 Strong</b></span>
+          <span class="bar-track"><span class="bar-fill" style="width:1.7%;background:var(--t2)"></span></span>
+          <span class="bar-val">85 <span>1%</span></span>
+          <span class="bar-tip">P2-Strong &middot; 85 accounts &middot; middle cluster retained on the 6-patient volume floor</span>
+        </div>
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>P3 Tail</b></span>
+          <span class="bar-track"><span class="bar-fill" style="width:37%;background:var(--t3)"></span></span>
+          <span class="bar-val">1,808 <span>26%</span></span>
+          <span class="bar-tip">P3-Tail &middot; 1,808 accounts &middot; signal-bearing but below the retention floors</span>
+        </div>
+        <div class="bar-row" tabindex="0">
+          <span class="bar-lab"><b>P4 Minimal</b></span>
+          <span class="bar-track"><span class="bar-fill" style="width:100%;background:var(--t4)"></span></span>
+          <span class="bar-val">4,880 <span>71%</span></span>
+          <span class="bar-tip">P4-Minimal &middot; 4,880 accounts &middot; no signal on any of the four exposure checks</span>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--t1)"></i>Priority accounts &mdash; P1 + P2</span>
+        <span><i style="background:var(--t4)"></i>Non-priority</span>
+      </div>
+    </div>
+
+    <p class="note">
+      42 accounts could not be mapped to any HCP in the refreshed universe and sit outside the four tiers above.
+    </p>
+  </div>
+</section>
+
+<!-- ============ WORKLOAD ============ -->
+<section id="workload">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <h2>Field workload index</h2>
+    </div>
+    <p class="sec-lede">
+      The last step converts target tier and engagement decile into a single number that sizes each HCP&rsquo;s
+      fair share of the field&rsquo;s fixed call capacity.
+    </p>
+
+    <div class="formula">
+      workload_index &nbsp;=&nbsp; (<b>calls</b> &divide; &Sigma;calls) &times; <b>0.7</b> &times; 32,000<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp; (<b>final_decile</b> &divide; &Sigma;deciles) &times; <b>0.3</b> &times; 32,000
+    </div>
+
+    <div class="split">
+      <div class="panel">
+        <h3>Calls by tier</h3>
+        <ul class="kv">
+          <li><span class="k"><i class="dot" style="background:var(--t1)"></i>Tier 1</span><span class="v">18 calls</span></li>
+          <li><span class="k"><i class="dot" style="background:var(--t2)"></i>Tier 2</span><span class="v">16 calls</span></li>
+          <li><span class="k"><i class="dot" style="background:var(--t3)"></i>Tier 3</span><span class="v">12 calls</span></li>
+          <li><span class="k"><i class="dot" style="background:var(--t4)"></i>Tier 4 &amp; 5</span><span class="v">excluded</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Weighting &amp; capacity</h3>
+        <ul class="kv">
+          <li><span class="k">Total call pool</span><span class="v">32,000</span></li>
+          <li><span class="k">Tier-based call share</span><span class="v">70%</span></li>
+          <li><span class="k">Engagement decile share</span><span class="v">30%</span></li>
+          <li><span class="k">Eligible HCPs</span><span class="v">3,173</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Geography</h3>
+        <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
+          Each HCP resolves to one ZIP through a source waterfall, then maps to a state and territory via the
+          ZIP-to-territory reference table &mdash; so workload can be balanced and compared by geography.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section id="impact">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <h2>What changed against the previous universe</h2>
+    </div>
+    <p class="sec-lede">
+      77% of the refreshed universe &mdash; 24,073 HCPs &mdash; overlaps the previous ~24k build. The headline is
+      stability: classifications and tiers held, and the new volume concentrates in the non-target long tail.
+    </p>
+
+    <div class="figs" style="margin-bottom:34px">
+      <div class="fig"><div class="fig-n">7,152</div><div class="fig-l">Net-new HCPs, mostly from the Komodo refresh</div></div>
+      <div class="fig"><div class="fig-n">~92%</div><div class="fig-l">Retain their specialty assignment</div></div>
+      <div class="fig"><div class="fig-n">~92%</div><div class="fig-l">Retain their final tier</div></div>
+      <div class="fig"><div class="fig-n">~93%</div><div class="fig-l">Of accounts retain their priority tier</div></div>
+    </div>
+
+    <div class="split" style="margin-bottom:30px">
+      <div class="panel">
+        <h3>The net-new HCPs</h3>
+        <ul class="kv">
+          <li><span class="k">In Tier 4&ndash;5 (limited target impact)</span><span class="v">~90%</span></li>
+          <li><span class="k">Pediatrics &amp; Other specialties</span><span class="v">~85%</span></li>
+          <li><span class="k">Prioritized specialists gained</span><span class="v delta-up">+51</span></li>
+          <li><span class="k">From Komodo alone</span><span class="v">6,256</span></li>
+        </ul>
+        <p class="note" style="margin-top:18px;border:0;padding:0">
+          The Komodo refresh added three months of incremental data, taking the source from ~11k to 14,055 HCPs.
+        </p>
+      </div>
+      <div class="panel">
+        <h3>Tier movement</h3>
+        <ul class="kv">
+          <li><span class="k">Tier 1 &amp; 2 moved to lower tiers</span><span class="v delta-down">~230</span></li>
+          <li><span class="k">Ex-Tier 1 now Tier 3/4/5</span><span class="v">32</span></li>
+          <li><span class="k">Ex-Tier 2 now Tier 3/4/5</span><span class="v">198</span></li>
+          <li><span class="k">New HCPs entering Tiers 1&ndash;3</span><span class="v delta-up">~1,700</span></li>
+        </ul>
+        <p class="note" style="margin-top:18px;border:0;padding:0">
+          Movement is driven mainly by refreshed KOL and treater designations and by the updated specialty logic.
+        </p>
+      </div>
+      <div class="panel">
+        <h3>Account movement</h3>
+        <ul class="kv">
+          <li><span class="k">Priority &rarr; non-priority</span><span class="v delta-down">25</span></li>
+          <li><span class="k">Non-priority &rarr; priority</span><span class="v delta-up">33</span></li>
+          <li><span class="k">Accounts holding their tier</span><span class="v">~93%</span></li>
+          <li><span class="k">Unmapped in the new universe</span><span class="v">42</span></li>
+        </ul>
+        <p class="note" style="margin-top:18px;border:0;padding:0">
+          Shifts track real changes in affiliated target HCPs, unique and treated patients, and Q77.4 claim volume.
+        </p>
+      </div>
+    </div>
+
+    <h3>Account priority movement, previous &rarr; refreshed</h3>
+    <div class="tscroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Previous tier</th>
+            <th class="num">P1-Elite</th><th class="num">P2-Strong</th><th class="num">P3-Tail</th>
+            <th class="num">P4-Minimal</th><th class="num">Unmapped</th><th class="num">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1-Elite</td><td class="num">76</td><td class="num">7</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">84</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>P2-Strong</td><td class="num">18</td><td class="num">45</td><td class="num">24</td><td class="num">0</td><td class="num">0</td><td class="num">87</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3-Tail</td><td class="num">0</td><td class="num">33</td><td class="num">1,481</td><td class="num">114</td><td class="num">12</td><td class="num">1,640</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>P4-Minimal</td><td class="num">0</td><td class="num">0</td><td class="num">302</td><td class="num">4,766</td><td class="num">30</td><td class="num">5,098</td></tr>
+          <tr><td><strong>Total</strong></td><td class="num"><strong>94</strong></td><td class="num"><strong>85</strong></td><td class="num"><strong>1,808</strong></td><td class="num"><strong>4,880</strong></td><td class="num"><strong>42</strong></td><td class="num"><strong>6,867</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      Full HCP-level and account-level movement matrices, including the named 25 and 33 accounts that changed
+      priority status, are in the deck and the business rules documents.
+    </p>
+  </div>
+</section>
+
+<!-- ============ DELIVERABLES ============ -->
+<section id="deliverables" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">09</span>
+      <h2>Delivered artifacts</h2>
+    </div>
+    <p class="sec-lede">
+      Each stage writes a signed-off output table. Enrichment steps only add columns &mdash; they never add or
+      drop rows &mdash; so the 3,173 target HCPs trace intact from the freeze through to the workload index.
+    </p>
+
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Deliverable</th><th>Grain</th><th>Carries</th></tr></thead>
+        <tbody>
+          <tr><td>Refreshed HCP universe</td><td>HCP</td><td>Specialty group, decile, tier, target tier, affiliation, territory</td></tr>
+          <tr><td>Patient cohort</td><td>Patient</td><td>Cohort arms, demographics, treatment status, attribution, funnel segment</td></tr>
+          <tr><td>HCP attributed-patient rollup</td><td>HCP</td><td>Unique, treated, active, discontinued and never-treated patient splits</td></tr>
+          <tr><td>Account rollup</td><td>Account</td><td>Affiliated HCP counts by tier, patient opportunity, claim volume, priority tier</td></tr>
+          <tr><td>Frozen account priority</td><td>Account</td><td>Locked P1&ndash;P4 assignment restored on every future rollup</td></tr>
+          <tr><td>Workload index</td><td>HCP</td><td>Tier-weighted call target blended with decile share of 32,000 calls</td></tr>
+          <tr><td>Business rules documentation</td><td>&mdash;</td><td>Four methodology documents covering all three stages</td></tr>
+          <tr><td>Code &amp; execution pipeline</td><td>&mdash;</td><td>Databricks notebooks in documented run order</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>BridgeBio &middot; Infi Achondroplasia HCP Universe Refresh &amp; Targeting &middot; Prepared by ProcDNA</span>
+    <span class="foot-links">
+      <a href="https://procdna.sharepoint.com/:f:/r/sites/0176_BridgebioAd-HocAnalyticsSupportH1%2726_0176CA0008/Documents/General/13%20Infi%20Achon%20HCP%20Universe%20Refresh%20%26%20Targeting/05%20PDNA%20Codes%20%26%20Business%20Rules%20Documents/PDNA%20Achon%20Business%20Rules%20Documents?d=wb96755c0506540c68a58e54741264dfc&amp;csf=1&amp;web=1&amp;e=ZKTnLJ" target="_blank" rel="noopener">Business rules</a>
+      <a href="https://procdna.sharepoint.com/:f:/r/sites/0176_BridgebioAd-HocAnalyticsSupportH1%2726_0176CA0008/Documents/General/13%20Infi%20Achon%20HCP%20Universe%20Refresh%20%26%20Targeting/05%20PDNA%20Codes%20%26%20Business%20Rules%20Documents/PDNA%20Achon%20Codes?d=w70bf25e39f51430b913bab11d5867bd1&amp;csf=1&amp;web=1&amp;e=lDiy4Z" target="_blank" rel="noopener">Code</a>
+    </span>
+  </div>
+</footer>
+</body>
+</html>
