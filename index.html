@@ -318,6 +318,34 @@ td.num,th.num{text-align:right;font-family:var(--ff-mono);font-variant-numeric:t
   font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;
 }
 
+/* spec list : label + value, no gulf between them */
+.speclist{margin:0;padding:0;display:flex;flex-direction:column}
+.speclist > div{
+  display:grid;grid-template-columns:104px 1fr;gap:16px;
+  padding:12px 0;border-bottom:1px solid var(--line);align-items:baseline;
+}
+.speclist > div:first-child{padding-top:0}
+.speclist > div:last-child{border-bottom:0;padding-bottom:0}
+.speclist dt{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);line-height:1.6;
+}
+.speclist dd{margin:0;font-size:13.5px;color:var(--ink);line-height:1.5}
+
+/* attribution cascade */
+.cascade{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.cascade li{
+  display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;
+  font-size:13.5px;color:var(--ink-2);line-height:1.5;
+}
+.cascade .cyc{
+  font-family:var(--ff-mono);font-size:10.5px;font-weight:500;
+  color:var(--accent-ink);background:var(--accent-wash);
+  border-radius:2px;text-align:center;padding:2px 0;line-height:1.5;
+}
+.cascade li.gap .cyc{color:var(--muted);background:var(--surface-sunk)}
+.cascade em{font-style:normal;color:var(--muted)}
+
 /* callouts */
 .callout{
   background:var(--surface);border:1px solid var(--line-strong);
@@ -687,24 +715,36 @@ img{max-width:100%}
     <div class="split" style="margin-bottom:32px">
       <div class="panel">
         <h3>Patient cohort</h3>
-        <ul class="kv">
-          <li><span class="k">Q77.4 arm</span><span class="v">&ge;1 office E&amp;M + &ge;2 dates</span></li>
-          <li><span class="k">Voxzogo arm</span><span class="v">&ge;1 Vox / vosoritide fill</span></li>
-          <li><span class="k">Age scope</span><span class="v">2-18 years</span></li>
-          <li><span class="k">Treatment status</span><span class="v">Active / Discont. / Never</span></li>
-        </ul>
+        <dl class="speclist">
+          <div>
+            <dt>Q77.4 arm</dt>
+            <dd>&ge;&nbsp;1 Q77.4 diagnosis on an office E&amp;M visit, and &ge;&nbsp;2 distinct service dates</dd>
+          </div>
+          <div>
+            <dt>Voxzogo arm</dt>
+            <dd>&ge;&nbsp;1 pharmacy fill of Voxzogo or vosoritide</dd>
+          </div>
+          <div>
+            <dt>Age scope</dt>
+            <dd>2 to 18 years, the on-label pediatric population</dd>
+          </div>
+          <div>
+            <dt>Treatment</dt>
+            <dd>Active &middot; Discontinued &middot; Never treated</dd>
+          </div>
+        </dl>
       </div>
       <div class="panel">
         <h3>Attribution cascade, lowest cycle wins</h3>
-        <ol style="margin:0;padding-left:20px;font-size:13.5px;color:var(--ink-2);line-height:1.8">
-          <li>Tier 1/2 Ped Endo or Geneticist, qualifying visit</li>
-          <li>Vox prescriber, gated on a qualifying visit</li>
-          <li>Tier 1/2, other specialty</li>
-          <li>Tier 3/4</li>
-          <li>Tier 5</li>
-          <li>Visited HCP outside the universe</li>
-          <li>Vox-prescriber stop-gap <span class="muted">- not visit-gated</span></li>
-          <li>Incidence-treater stop-gap <span class="muted">- last resort</span></li>
+        <ol class="cascade">
+          <li><span class="cyc">1</span><span>Tier 1/2 Ped Endo or Geneticist, qualifying visit</span></li>
+          <li><span class="cyc">2</span><span>Vox prescriber, gated on a qualifying visit</span></li>
+          <li><span class="cyc">3</span><span>Tier 1/2, other specialty</span></li>
+          <li><span class="cyc">4</span><span>Tier 3/4</span></li>
+          <li><span class="cyc">5</span><span>Tier 5</span></li>
+          <li><span class="cyc">6</span><span>Visited HCP outside the universe</span></li>
+          <li class="gap"><span class="cyc">7</span><span>Vox-prescriber stop-gap <em>&middot; not visit-gated</em></span></li>
+          <li class="gap"><span class="cyc">8</span><span>Incidence-treater stop-gap <em>&middot; last resort</em></span></li>
         </ol>
       </div>
     </div>
