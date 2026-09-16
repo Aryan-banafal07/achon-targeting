@@ -838,22 +838,24 @@ img{max-width:100%}
       <div class="panel">
         <h3>Attribution cascade, lowest cycle wins</h3>
         <ol class="cascade">
-          <li><span class="cyc">1</span><span>Tier 1/2 Ped Endo or Geneticist, qualifying visit</span></li>
-          <li><span class="cyc">2</span><span>Vox prescriber, gated on a qualifying visit</span></li>
-          <li><span class="cyc">3</span><span>Tier 1/2, other specialty</span></li>
-          <li><span class="cyc">4</span><span>Tier 3/4</span></li>
-          <li><span class="cyc">5</span><span>Tier 5</span></li>
-          <li><span class="cyc">6</span><span>Visited HCP outside the universe</span></li>
-          <li class="gap"><span class="cyc">7</span><span>Vox-prescriber stop-gap <em>&middot; not visit-gated</em></span></li>
-          <li class="gap"><span class="cyc">8</span><span>Incidence-treater stop-gap <em>&middot; last resort</em></span></li>
+          <li><span class="cyc">1</span><span>Tier 1/2 Pediatric Endocrinologist or Geneticist rendered a qualifying visit</span></li>
+          <li><span class="cyc">2</span><span>Patient&rsquo;s Vox prescriber, gated on &ge; 1 qualifying visit by any HCP <em>&middot; a Vox fill alone is not a visit</em></span></li>
+          <li><span class="cyc">3</span><span>Tier 1/2, other specialty, qualifying visit</span></li>
+          <li><span class="cyc">4</span><span>Tier 3/4, qualifying visit</span></li>
+          <li><span class="cyc">5</span><span>Tier 5, qualifying visit</span></li>
+          <li><span class="cyc">6</span><span>Visited HCP not in the universe at all <em>&middot; Non-Target Attributed</em></span></li>
+          <li class="gap"><span class="cyc">7</span><span>Vox-prescriber stop-gap, not visit-gated <em>&middot; fires only if cycles 1 to 6 are empty</em></span></li>
+          <li class="gap"><span class="cyc">8</span><span>Incidence-treater stop-gap, not visit-gated <em>&middot; fires only if cycles 1 to 7 are empty</em></span></li>
         </ol>
       </div>
     </div>
 
     <p>
-      A rendered 3-year Q77.4 visit is required for any attribution. A Voxzogo fill alone no longer
-      qualifies. Ties within a cycle break on office E&amp;M visits first, so a clinician who actually sees the
-      patient in clinic outranks high-frequency home-health billing.
+      A rendered 3-year Q77.4 visit is required for any attribution, and a Voxzogo fill alone no longer
+      qualifies. Ties within a cycle break in order on most office E&amp;M visits, then most clinical visits,
+      then most recent visit, then NPI. Home-health and private-duty per-diem codes are excluded from the
+      visit counts, so daily home-health billing cannot out-rank a clinician who actually sees the patient
+      in clinic.
     </p>
 
     <div class="assume" style="max-width:none">
@@ -952,13 +954,15 @@ img{max-width:100%}
       <div class="panel">
         <h3>Priority tiering method</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          Signal-bearing HCOs are log-scaled, standardised, then clustered with k-means (k = 3, fixed
-          seed) on opportunity and quality features and ranked by mean signal. HCOs failing every signal
-          check skip clustering and go straight to P4-Minimal.
+          Signal-bearing HCOs are log-scaled, standardised, then clustered with k-means (k = 3, 25
+          restarts, fixed seed) on opportunity and quality features and ranked into P1/P2/P3 by mean
+          signal. HCOs failing all four signal checks skip clustering and go straight to P4-Minimal.
         </p>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
-          Deterministic patient-volume floors then run in order, and the result is frozen so future rollups
-          restore the locked tier rather than re-clustering and drifting.
+          Three deterministic rules then run in order at freeze time: demote P2 to P3 if unique &lt; 6
+          <strong>and</strong> treated &lt; 1; promote P3/P4 to P2 if unique &ge; 6; promote any non-P1 to
+          P1 if unique &ge; 20. The result is frozen so future rollups restore the locked tier rather than
+          re-clustering and drifting.
         </p>
       </div>
       <div class="panel">
