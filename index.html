@@ -14,35 +14,35 @@
 /* ===========================================================
    Palette derived from bridgebio.com design tokens
    Sunburst Orange  = action / accent
-   Progress Purple  = sequential tier ramp
+   Progress Purple  = tier ramp + secondary accent
    Sandstone + grey-neutral = grounds and text
    =========================================================== */
 :root{
   --ff-sans:"SuisseIntl",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
-  --ff-serif:"SuisseNeue","Roboto Slab",Rockwell,"Roboto Slab",Georgia,serif;
+  --ff-serif:"SuisseNeue","Roboto Slab",Rockwell,Georgia,serif;
   --ff-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 
-  --paper:#fcfbf8;          /* sandstone-light */
+  --paper:#fcfbf8;
   --surface:#ffffff;
-  --surface-sunk:#f8f8f8;   /* grey-neutral-50 */
-  --sandstone:#f6ebdb;
-  --ink:#1a1a1a;            /* grey-neutral-900 */
-  --ink-2:#444444;          /* grey-neutral-700 */
-  --muted:#5f5f5f;          /* grey-neutral-600 */
-  --line:#e5e5e5;           /* grey-neutral-200 */
-  --line-strong:#d4d4d4;    /* grey-neutral-300 */
+  --surface-sunk:#f8f8f8;
+  --ink:#1a1a1a;
+  --ink-2:#444444;
+  --muted:#5f5f5f;
+  --line:#e5e5e5;
+  --line-strong:#d4d4d4;
 
-  /* tier ramp : progress purple, dark -> light */
   --t1:#3b228d;
   --t2:#4f2db8;
   --t3:#644df2;
   --t4:#8e81ff;
   --t5:#d6d0ff;
 
-  /* action : sunburst orange */
   --accent:#ff5e19;
-  --accent-ink:#b34010;     /* orange-800, readable as text */
-  --accent-wash:#ffece3;    /* orange-50 */
+  --accent-ink:#b34010;
+  --accent-wash:#ffece3;
+
+  --accent-2:#4f2db8;
+  --accent-2-wash:#ece9ff;
 
   --w70:#b34010;
   --w70-bg:#ffece3;
@@ -54,13 +54,13 @@
 
   --maxw:1120px;
   --prose:68ch;
+  --navh:54px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#0f0f0f;
     --surface:#1a1a1a;
     --surface-sunk:#141414;
-    --sandstone:#2c2620;
     --ink:#fcfcfc;
     --ink-2:#d4d4d4;
     --muted:#a9a9a9;
@@ -77,6 +77,9 @@
     --accent-ink:#ff8a4f;
     --accent-wash:#2a1408;
 
+    --accent-2:#b2a8ff;
+    --accent-2-wash:#1e1640;
+
     --w70:#ff8a4f;
     --w70-bg:#2a1408;
     --w30:#b2a8ff;
@@ -90,7 +93,6 @@
   --paper:#0f0f0f;
   --surface:#1a1a1a;
   --surface-sunk:#141414;
-  --sandstone:#2c2620;
   --ink:#fcfcfc;
   --ink-2:#d4d4d4;
   --muted:#a9a9a9;
@@ -107,6 +109,9 @@
   --accent-ink:#ff8a4f;
   --accent-wash:#2a1408;
 
+  --accent-2:#b2a8ff;
+  --accent-2-wash:#1e1640;
+
   --w70:#ff8a4f;
   --w70-bg:#2a1408;
   --w30:#b2a8ff;
@@ -117,6 +122,7 @@
 }
 
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;
   background:var(--paper);
@@ -136,25 +142,34 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 /* ============ nav ============ */
 .nav{
   position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
-  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  background:color-mix(in srgb, var(--paper) 90%, transparent);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
 }
 .nav-in{
   max-width:var(--maxw);margin-inline:auto;padding:0 20px;
-  display:flex;align-items:center;gap:24px;min-height:52px;flex-wrap:wrap;
+  display:flex;align-items:center;gap:18px;min-height:var(--navh);flex-wrap:wrap;
 }
 .nav-mark{
   font-family:var(--ff-mono);
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent-ink);font-weight:500;white-space:nowrap;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent-2);font-weight:500;white-space:nowrap;
+  text-decoration:none;
 }
-.nav-links{display:flex;gap:18px;flex-wrap:wrap;margin-left:auto}
+.nav-links{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto;align-items:center}
 .nav-links a{
-  color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;
-  padding:4px 0;border-bottom:1.5px solid transparent;
+  color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:500;
+  padding:4px 0;border-bottom:1.5px solid transparent;white-space:nowrap;
+  transition:color .15s ease, border-color .15s ease;
 }
-.nav-links a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+.nav-links a .n{
+  font-family:var(--ff-mono);font-size:10.5px;color:var(--line-strong);margin-right:4px;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover .n{color:var(--muted)}
+.nav-links a[aria-current="true"]{color:var(--accent-ink);border-bottom-color:var(--accent)}
+.nav-links a[aria-current="true"] .n{color:var(--accent)}
+.nav-sep{width:1px;height:14px;background:var(--line);flex:none}
 
 /* ============ hero ============ */
 .hero{padding-block:52px 40px;border-bottom:1px solid var(--line)}
@@ -168,24 +183,21 @@ h1{
   font-weight:500;font-size:clamp(32px,5vw,50px);line-height:1.1;
   letter-spacing:-.018em;margin:0 0 18px;text-wrap:balance;max-width:17ch;
 }
-h1 em{font-style:normal;color:var(--accent);font-weight:600}
+h1 em{font-style:normal;color:var(--accent-2);font-weight:600}
 .lede{font-size:17px;color:var(--ink-2);max-width:var(--prose);margin:0 0 8px}
+
 .hero-meta{
   display:flex;flex-wrap:wrap;margin:34px 0 0;padding:0;
   border-top:1px solid var(--line);
 }
-.hero-meta > div{
-  padding:16px 26px;border-right:1px solid var(--line);
-}
+.hero-meta > div{padding:16px 26px;border-right:1px solid var(--line)}
 .hero-meta > div:first-child{padding-left:0}
 .hero-meta > div:last-child{border-right:0;padding-right:0}
 .hero-meta dt{
   font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted);margin:0 0 5px;white-space:nowrap;
 }
-.hero-meta dd{
-  margin:0;font-size:14px;font-weight:500;color:var(--ink);line-height:1.3;
-}
+.hero-meta dd{margin:0;font-size:14px;font-weight:500;color:var(--ink);line-height:1.3}
 
 /* ============ resource links ============ */
 .res{
@@ -233,14 +245,14 @@ h1 em{font-style:normal;color:var(--accent);font-weight:600}
 .fig-l{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.4}
 
 /* ============ sections ============ */
-section{padding-block:56px;border-bottom:1px solid var(--line)}
+section{padding-block:56px;border-bottom:1px solid var(--line);scroll-margin-top:calc(var(--navh) + 8px)}
 section:last-of-type{border-bottom:0}
 .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap}
 .sec-num{
   font-family:var(--ff-mono);
-  font-size:11px;letter-spacing:.12em;color:var(--accent-ink);
-  border:1px solid var(--line-strong);border-radius:2px;padding:3px 8px;
-  white-space:nowrap;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent-ink);background:var(--accent-wash);
+  border-radius:2px;padding:4px 9px;white-space:nowrap;
 }
 h2{
   font-family:var(--ff-serif);font-weight:500;
@@ -267,21 +279,23 @@ code{
   border:1px solid var(--line);border-radius:3px;overflow:hidden;
 }
 .step{
-  display:grid;grid-template-columns:132px 1fr;gap:0;
+  display:grid;grid-template-columns:118px 1fr 34px;gap:0;
   background:var(--surface);align-items:stretch;
+  text-decoration:none;color:inherit;
+  transition:background .15s ease;
 }
+.step:hover{background:var(--accent-wash)}
 .step-n{
-  background:var(--surface-sunk);
-  border-right:1px solid var(--line);
-  padding:16px 18px;display:flex;flex-direction:column;justify-content:center;gap:2px;
+  background:var(--surface-sunk);border-right:1px solid var(--line);
+  padding:15px 18px;display:flex;flex-direction:column;justify-content:center;gap:2px;
 }
+.step:hover .step-n{background:var(--surface-sunk)}
 .step-n b{
-  font-family:var(--ff-mono);
-  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--accent-ink);font-weight:500;
+  font-family:var(--ff-mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent-ink);font-weight:500;
 }
-.step-n span{font-size:11.5px;color:var(--muted);line-height:1.3}
-.step-body{padding:16px 20px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.step-n span{font-size:11px;color:var(--muted);line-height:1.3}
+.step-body{padding:15px 20px;display:flex;flex-direction:column;gap:7px;justify-content:center}
 .step-title{
   font-family:var(--ff-serif);font-size:17.5px;font-weight:500;
   line-height:1.28;color:var(--ink);
@@ -289,8 +303,14 @@ code{
 .step-items{display:flex;flex-wrap:wrap;gap:6px}
 .step-items i{
   font-style:normal;font-size:12px;color:var(--ink-2);
-  background:var(--accent-wash);border-radius:2px;padding:3px 9px;
+  background:var(--accent-2-wash);border-radius:2px;padding:3px 9px;
 }
+.step-go{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--line-strong);transition:color .15s ease;
+}
+.step:hover .step-go{color:var(--accent)}
+.step-go svg{width:14px;height:14px}
 
 /* ============ tables ============ */
 .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
@@ -318,7 +338,7 @@ td.num,th.num{text-align:right;font-family:var(--ff-mono);font-variant-numeric:t
   font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;
 }
 
-/* spec list : label + value, no gulf between them */
+/* spec list */
 .speclist{margin:0;padding:0;display:flex;flex-direction:column}
 .speclist > div{
   display:grid;grid-template-columns:104px 1fr;gap:16px;
@@ -350,19 +370,18 @@ td.num,th.num{text-align:right;font-family:var(--ff-mono);font-variant-numeric:t
 .callout{
   background:var(--surface);border:1px solid var(--line-strong);
   border-left:3px solid var(--t3);border-radius:3px;
-  padding:16px 20px;margin:0;font-size:13.5px;color:var(--ink-2);
-  max-width:none;
+  padding:16px 20px;margin:0;font-size:13.5px;color:var(--ink-2);max-width:none;
 }
 .callout b{color:var(--ink)}
-.callout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:26px}
+.callout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-bottom:26px}
 
 /* formula */
 .formula{
   background:var(--surface);border:1px solid var(--line-strong);
   border-left:3px solid var(--accent);border-radius:3px;
   padding:22px 24px;margin:0 0 16px;
-  font-family:var(--ff-mono);
-  font-size:14.5px;line-height:2;color:var(--ink-2);overflow-x:auto;
+  font-family:var(--ff-mono);font-size:14.5px;line-height:2;
+  color:var(--ink-2);overflow-x:auto;
 }
 .formula .lhs{color:var(--accent-ink);font-weight:500}
 .wt{border-radius:2px;padding:2px 7px;font-weight:500;white-space:nowrap}
@@ -375,8 +394,7 @@ td.num,th.num{text-align:right;font-family:var(--ff-mono);font-variant-numeric:t
 }
 .assume{
   margin-top:14px;padding:12px 14px;border-radius:3px;
-  background:var(--w30-bg);color:var(--w30);
-  font-size:12.5px;line-height:1.5;
+  background:var(--w30-bg);color:var(--w30);font-size:12.5px;line-height:1.5;
 }
 .assume b{font-weight:600}
 
@@ -385,13 +403,19 @@ footer{padding-block:38px 46px;color:var(--muted);font-size:12.5px}
 .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:baseline}
 .foot-links{display:flex;gap:18px;flex-wrap:wrap}
 
+@media (max-width:900px){
+  .nav-links{width:100%;margin-left:0;padding-bottom:8px;gap:12px}
+  .nav-sep{display:none}
+}
 @media (max-width:640px){
   .fig{padding:20px 16px}
   section{padding-block:44px}
   .step{grid-template-columns:1fr}
   .step-n{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;gap:10px;align-items:baseline}
+  .step-go{display:none}
 }
 @media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
   *{transition:none!important;animation:none!important}
   .res-card:hover{transform:none}
 }
@@ -409,20 +433,23 @@ img{max-width:100%}
 <body>
 <nav class="nav">
   <div class="nav-in">
-    <div class="nav-mark">BridgeBio &middot; Infi Achon</div>
+    <a class="nav-mark" href="#top">BridgeBio &middot; Infi Achon</a>
     <div class="nav-links">
       <a href="#resources">Resources</a>
       <a href="#pipeline">Pipeline</a>
-      <a href="#universe">Universe</a>
-      <a href="#deciling">Deciling</a>
-      <a href="#targeting">Targeting</a>
-      <a href="#affiliation">Accounts</a>
-      <a href="#workload">Workload</a>
+      <span class="nav-sep"></span>
+      <a href="#step1"><span class="n">1</span>Universe</a>
+      <a href="#step2"><span class="n">2</span>Initial Tiering</a>
+      <a href="#step3"><span class="n">3</span>Attribution</a>
+      <a href="#step4"><span class="n">4</span>Targeting</a>
+      <a href="#step5"><span class="n">5</span>Affiliations</a>
+      <a href="#step6"><span class="n">6</span>Account Tiering</a>
+      <a href="#step7"><span class="n">7</span>Workload</a>
     </div>
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero" id="top">
   <div class="wrap">
     <p class="eyebrow">HCP Universe Refresh &amp; Targeting &middot; Achondroplasia</p>
     <h1>The refreshed <em>Infi</em> targeting framework</h1>
@@ -441,11 +468,10 @@ img{max-width:100%}
   </div>
 </header>
 
-<!-- ============ 01 RESOURCES ============ -->
+<!-- ============ RESOURCES ============ -->
 <section id="resources">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">01</span>
       <h2>Documentation, code &amp; results</h2>
     </div>
     <p class="sec-lede">
@@ -504,78 +530,84 @@ img{max-width:100%}
   </div>
 </section>
 
-<!-- ============ 02 PIPELINE ============ -->
+<!-- ============ PIPELINE ============ -->
 <section id="pipeline">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">02</span>
       <h2>How the pipeline fits together</h2>
     </div>
     <p class="sec-lede">
       Seven steps run as one continuous chain. Each step&rsquo;s output is the next step&rsquo;s input, so a
-      re-run anywhere upstream requires re-running everything below it.
+      re-run anywhere upstream requires re-running everything below it. Select any step to jump to its detail.
     </p>
 
     <div class="steps">
-      <div class="step">
+      <a class="step" href="#step1">
         <div class="step-n"><b>Step 1</b><span>Foundation</span></div>
         <div class="step-body">
           <div class="step-title">Define HCP Universe</div>
           <div class="step-items"><i>Update HCP Universe</i></div>
         </div>
-      </div>
-      <div class="step">
+        <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="step" href="#step2">
         <div class="step-n"><b>Step 2</b><span>Segmentation</span></div>
         <div class="step-body">
-          <div class="step-title">Score and classify every HCP</div>
+          <div class="step-title">Initial HCP Tiering</div>
           <div class="step-items"><i>HCP Deciling</i><i>HCP Tiering</i></div>
         </div>
-      </div>
-      <div class="step">
+        <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="step" href="#step3">
         <div class="step-n"><b>Step 3</b><span>Patient evidence</span></div>
         <div class="step-body">
-          <div class="step-title">Build the patient view</div>
+          <div class="step-title">Patient Attribution</div>
           <div class="step-items"><i>Patient Cohort</i><i>Primary Patient Attribution</i></div>
         </div>
-      </div>
-      <div class="step">
+        <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="step" href="#step4">
         <div class="step-n"><b>Step 4</b><span>Target list</span></div>
         <div class="step-body">
           <div class="step-title">HCP Field Targeting</div>
           <div class="step-items"><i>HCP Field Targeting</i></div>
         </div>
-      </div>
-      <div class="step">
+        <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="step" href="#step5">
         <div class="step-n"><b>Step 5</b><span>Linkage</span></div>
         <div class="step-body">
-          <div class="step-title">Connect HCPs to organisations</div>
+          <div class="step-title">Affiliations</div>
           <div class="step-items"><i>HCP-HCO Affiliation</i></div>
         </div>
-      </div>
-      <div class="step">
+        <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="step" href="#step6">
         <div class="step-n"><b>Step 6</b><span>Account view</span></div>
         <div class="step-body">
-          <div class="step-title">Roll up and prioritize accounts</div>
+          <div class="step-title">Account Tiering</div>
           <div class="step-items"><i>HCO-Parent HCO Roll Up (campus level)</i><i>Account Prioritization</i></div>
         </div>
-      </div>
-      <div class="step">
+        <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="step" href="#step7">
         <div class="step-n"><b>Step 7</b><span>Field plan</span></div>
         <div class="step-body">
-          <div class="step-title">Size the call plan</div>
+          <div class="step-title">Workload Index</div>
           <div class="step-items"><i>Workload Index Calculation</i></div>
         </div>
-      </div>
+        <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ============ 03 UNIVERSE ============ -->
-<section id="universe">
+<!-- ============ STEP 1 ============ -->
+<section id="step1">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">03</span>
-      <h2>Building the universe</h2>
+      <span class="sec-num">Step 1</span>
+      <h2>Define HCP Universe</h2>
     </div>
     <p class="sec-lede">
       The refreshed universe comprises 31,225 HCPs across five key specialist segments. Specialty is now
@@ -590,6 +622,10 @@ img{max-width:100%}
       </div>
       <div class="callout">
         <b>~23% net-new.</b> 7,152 HCPs are new to the universe in the current refresh.
+      </div>
+      <div class="callout">
+        <b>Komodo drove the growth.</b> The Komodo source moved from ~11K to ~14K HCPs, adding three months
+        of incremental data through May 2026.
       </div>
     </div>
 
@@ -635,20 +671,20 @@ img{max-width:100%}
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ============ 04 DECILING ============ -->
-<section id="deciling">
+<!-- ============ STEP 2 ============ -->
+<section id="step2">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">04</span>
-      <h2>Deciling &amp; initial tiering</h2>
+      <span class="sec-num">Step 2</span>
+      <h2>Initial HCP Tiering</h2>
     </div>
     <p class="sec-lede">
       Three independent deciles are computed, one per claims source, and the best of the three is kept, so an
-      HCP gets credit for whichever source shows the strongest relative engagement.
+      HCP gets credit for whichever source shows the strongest relative engagement. Decile then combines with
+      KOL, treater and specialty signals to produce the initial tier.
     </p>
 
     <div class="split" style="margin-bottom:32px">
@@ -700,19 +736,19 @@ img{max-width:100%}
   </div>
 </section>
 
-<!-- ============ 05 TARGETING ============ -->
-<section id="targeting">
+<!-- ============ STEP 3 ============ -->
+<section id="step3">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">05</span>
-      <h2>Patient attribution &amp; target tiers</h2>
+      <span class="sec-num">Step 3</span>
+      <h2>Patient Attribution</h2>
     </div>
     <p class="sec-lede">
-      Specialty alone doesn&rsquo;t earn a field call. This step layers in who each HCP is actually
-      attributed to, and how many patients they have genuinely touched.
+      Specialty alone doesn&rsquo;t earn a field call. This step builds the patient cohort, then runs an
+      eight-cycle cascade to pick a single primary HCP for every patient.
     </p>
 
-    <div class="split" style="margin-bottom:32px">
+    <div class="split" style="margin-bottom:26px">
       <div class="panel">
         <h3>Patient cohort</h3>
         <dl class="speclist">
@@ -755,7 +791,25 @@ img{max-width:100%}
       patient in clinic outranks high-frequency home-health billing.
     </p>
 
-    <h3 style="margin-top:34px">Target tiers</h3>
+    <div class="assume" style="max-width:none">
+      <b>Incidence treater NPI.</b> A new metric was created in the treatment-status layer so that patient
+      attribution refreshes correctly, and it supplies the final stop-gap cycle above.
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEP 4 ============ -->
+<section id="step4">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">Step 4</span>
+      <h2>HCP Field Targeting</h2>
+    </div>
+    <p class="sec-lede">
+      Attribution and patient-touch volume convert the initial tier into a field-ready target tier. Tiers 1
+      to 3 form the call plan; Tiers 4 and 5 are the non-target long tail.
+    </p>
+
     <div class="tscroll">
       <table>
         <thead><tr><th>Tier</th><th>Profile</th><th>Rule</th><th class="num">HCPs</th><th class="num">%</th></tr></thead>
@@ -770,37 +824,66 @@ img{max-width:100%}
     </div>
 
     <div class="assume" style="max-width:none">
-      <b>Priority tiers (~3.2K).</b> Tiers 1-3 form the field target pool. The patient-touchpoint
-      threshold was set at <b>&ge; 7</b> to land the final pool at approximately 3.2K targets.
+      <b>Priority tiers (~3.2K).</b> The patient-touchpoint threshold was updated to <b>&ge; 7</b> to land the
+      final pool at approximately 3.2K targets across Tiers 1 to 3.
     </div>
   </div>
 </section>
 
-<!-- ============ 06 ACCOUNTS ============ -->
-<section id="affiliation">
+<!-- ============ STEP 5 ============ -->
+<section id="step5">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">06</span>
-      <h2>Affiliation, account rollup &amp; prioritization</h2>
+      <span class="sec-num">Step 5</span>
+      <h2>Affiliations</h2>
     </div>
     <p class="sec-lede">
-      Before any rollup, the target universe is frozen. Claims data changes over time, and without that lock,
-      target counts and every downstream account number would drift between runs.
+      Every target HCP is linked to a mastered healthcare organisation, so the target list can be read at the
+      account level in Step 6.
     </p>
 
-    <div class="split" style="margin-bottom:32px">
+    <div class="split">
       <div class="panel">
-        <h3>HCP to account affiliation</h3>
+        <h3>How accounts resolve</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          Accounts resolve from a single mastered NPI-to-account table. The earlier name-matching
-          crosswalk is retired, and placeholder values are converted to true nulls so an HCP with no genuine
+          Accounts resolve from a single mastered NPI-to-account table. The earlier name-matching crosswalk
+          is retired, and placeholder values are converted to true nulls so an HCP with no genuine
           affiliation is excluded rather than grouped under a dash.
         </p>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
-          Where no direct mastered HCO was available through the Infi universe or the VOD crosswalk, fuzzy
-          matching and manual checks were applied to raise coverage across the target pool.
+          Affiliations are sourced from the Infi universe and the VOD crosswalk, with DHC hospital
+          affiliation and Veeva primary affiliation layered on for coverage.
         </p>
       </div>
+      <div class="panel">
+        <h3>Closing the coverage gap</h3>
+        <p style="font-size:13.5px;color:var(--ink-2)">
+          Among the target pool, a set of HCPs had no direct mastered HCO available through either the Infi
+          universe or the VOD crosswalk. Fuzzy matching and manual checks recovered mastered HCOs for a
+          further group of them.
+        </p>
+        <div class="assume">
+          <b>Implication.</b> Higher coverage of target HCPs going into the HCO tier refresh, which makes the
+          account-level view in Step 6 more complete.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEP 6 ============ -->
+<section id="step6">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">Step 6</span>
+      <h2>Account Tiering</h2>
+    </div>
+    <p class="sec-lede">
+      Affiliated HCPs and their patients roll up to the mastered account, which is then assigned a priority
+      tier. The target universe is frozen first, so account numbers stay reproducible between runs.
+    </p>
+
+    <div class="split" style="margin-bottom:32px">
       <div class="panel">
         <h3>Priority tiering method</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
@@ -810,6 +893,14 @@ img{max-width:100%}
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
           Deterministic patient-volume floors then run in order, and the result is frozen so future rollups
           restore the locked tier rather than re-clustering and drifting.
+        </p>
+      </div>
+      <div class="panel">
+        <h3>What drives a tier change</h3>
+        <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
+          Between refreshes, accounts move tier on real changes in the number of affiliated target HCPs, the
+          count of unique and treated patients, and Q77.4 claim volume. Clustering results are locked after
+          each intentional re-tier so routine rebuilds do not shift them.
         </p>
       </div>
     </div>
@@ -826,20 +917,15 @@ img{max-width:100%}
         </tbody>
       </table>
     </div>
-
-    <p class="note">
-      Tier shifts between refreshes track real changes in affiliated target HCPs, unique and treated patients,
-      and Q77.4 claim volume.
-    </p>
   </div>
 </section>
 
-<!-- ============ 07 WORKLOAD ============ -->
-<section id="workload" style="border-bottom:0">
+<!-- ============ STEP 7 ============ -->
+<section id="step7" style="border-bottom:0">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">07</span>
-      <h2>Field workload index</h2>
+      <span class="sec-num">Step 7</span>
+      <h2>Workload Index</h2>
     </div>
     <p class="sec-lede">
       The last step converts target tier and final decile into a single number that sizes each HCP&rsquo;s
@@ -897,5 +983,50 @@ img{max-width:100%}
     </span>
   </div>
 </footer>
+
+<script>
+(function () {
+  var links = Array.prototype.slice.call(
+    document.querySelectorAll('.nav-links a[href^="#"]')
+  );
+  var targets = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (el) targets.push({ link: a, el: el });
+  });
+  if (!targets.length) return;
+
+  var ticking = false;
+
+  function offsetTop(el) {
+    var y = 0;
+    while (el) { y += el.offsetTop; el = el.offsetParent; }
+    return y;
+  }
+
+  function update() {
+    ticking = false;
+    var probe = window.pageYOffset + 84;
+    var active = null;
+    for (var i = 0; i < targets.length; i++) {
+      if (offsetTop(targets[i].el) <= probe) active = targets[i];
+    }
+    // at the very bottom, the last section wins
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2) {
+      active = targets[targets.length - 1];
+    }
+    targets.forEach(function (t) {
+      if (t === active) t.link.setAttribute('aria-current', 'true');
+      else t.link.removeAttribute('aria-current');
+    });
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
 </body>
 </html>
