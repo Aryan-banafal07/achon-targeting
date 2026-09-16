@@ -8,99 +8,112 @@
 <title>Infi Achon Targeting Refresh</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 
 <style>
-/* ============ tokens : light (complete set) ============ */
+/* ===========================================================
+   Palette derived from bridgebio.com design tokens
+   Sunburst Orange  = action / accent
+   Progress Purple  = sequential tier ramp
+   Sandstone + grey-neutral = grounds and text
+   =========================================================== */
 :root{
-  --paper:#f4f7f7;
+  --ff-sans:"SuisseIntl",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-serif:"SuisseNeue","Roboto Slab",Rockwell,"Roboto Slab",Georgia,serif;
+  --ff-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --paper:#fcfbf8;          /* sandstone-light */
   --surface:#ffffff;
-  --surface-sunk:#eef3f3;
-  --ink:#12191f;
-  --ink-2:#31424a;
-  --muted:#5a6a70;
-  --line:#dce4e5;
-  --line-strong:#c2d0d2;
+  --surface-sunk:#f8f8f8;   /* grey-neutral-50 */
+  --sandstone:#f6ebdb;
+  --ink:#1a1a1a;            /* grey-neutral-900 */
+  --ink-2:#444444;          /* grey-neutral-700 */
+  --muted:#5f5f5f;          /* grey-neutral-600 */
+  --line:#e5e5e5;           /* grey-neutral-200 */
+  --line-strong:#d4d4d4;    /* grey-neutral-300 */
 
-  /* the tier ramp IS the palette : one hue, dark -> light, T1 -> T5 */
-  --t1:#0a4a4f;
-  --t2:#0f6f76;
-  --t3:#3f9aa0;
-  --t4:#8ec4c8;
-  --t5:#cfe2e3;
+  /* tier ramp : progress purple, dark -> light */
+  --t1:#3b228d;
+  --t2:#4f2db8;
+  --t3:#644df2;
+  --t4:#8e81ff;
+  --t5:#d6d0ff;
 
-  --accent:#0f6f76;
-  --accent-ink:#0a4a4f;
-  --accent-wash:#e4efef;
+  /* action : sunburst orange */
+  --accent:#ff5e19;
+  --accent-ink:#b34010;     /* orange-800, readable as text */
+  --accent-wash:#ffece3;    /* orange-50 */
 
-  --w70:#0a4a4f;
-  --w70-bg:#dfeced;
-  --w30:#8a5a12;
-  --w30-bg:#f7eedd;
+  --w70:#b34010;
+  --w70-bg:#ffece3;
+  --w30:#4f2db8;
+  --w30-bg:#ece9ff;
 
-  --shadow-card:0 1px 2px rgba(18,25,31,.05), 0 8px 24px -14px rgba(10,74,79,.35);
-  --shadow-lift:0 2px 4px rgba(18,25,31,.07), 0 18px 40px -20px rgba(10,74,79,.45);
+  --shadow-card:0 1px 2px rgba(26,26,26,.05), 0 8px 24px -14px rgba(99,56,226,.28);
+  --shadow-lift:0 2px 4px rgba(26,26,26,.07), 0 18px 40px -20px rgba(99,56,226,.4);
 
   --maxw:1120px;
   --prose:68ch;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#0b1113;
-    --surface:#121b1e;
-    --surface-sunk:#0e1618;
-    --ink:#e7eef0;
-    --ink-2:#bccacd;
-    --muted:#8ea0a4;
-    --line:#223034;
-    --line-strong:#33454a;
+    --paper:#0f0f0f;
+    --surface:#1a1a1a;
+    --surface-sunk:#141414;
+    --sandstone:#2c2620;
+    --ink:#fcfcfc;
+    --ink-2:#d4d4d4;
+    --muted:#a9a9a9;
+    --line:#2c2c2c;
+    --line-strong:#444444;
 
-    --t1:#7fd4da;
-    --t2:#58b2b9;
-    --t3:#3c8990;
-    --t4:#2a636a;
-    --t5:#1d454b;
+    --t1:#d6d0ff;
+    --t2:#b2a8ff;
+    --t3:#8e81ff;
+    --t4:#644df2;
+    --t5:#4f2db8;
 
-    --accent:#63c3ca;
-    --accent-ink:#8fd8de;
-    --accent-wash:#14282b;
+    --accent:#ff722e;
+    --accent-ink:#ff8a4f;
+    --accent-wash:#2a1408;
 
-    --w70:#8fd8de;
-    --w70-bg:#14282b;
-    --w30:#e0b070;
-    --w30-bg:#2c2318;
+    --w70:#ff8a4f;
+    --w70-bg:#2a1408;
+    --w30:#b2a8ff;
+    --w30-bg:#1e1640;
 
-    --shadow-card:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.7);
-    --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 18px 40px -20px rgba(0,0,0,.8);
+    --shadow-card:0 1px 2px rgba(0,0,0,.45), 0 8px 24px -14px rgba(0,0,0,.75);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.5), 0 18px 40px -20px rgba(0,0,0,.85);
   }
 }
 :root[data-theme="dark"]{
-  --paper:#0b1113;
-  --surface:#121b1e;
-  --surface-sunk:#0e1618;
-  --ink:#e7eef0;
-  --ink-2:#bccacd;
-  --muted:#8ea0a4;
-  --line:#223034;
-  --line-strong:#33454a;
+  --paper:#0f0f0f;
+  --surface:#1a1a1a;
+  --surface-sunk:#141414;
+  --sandstone:#2c2620;
+  --ink:#fcfcfc;
+  --ink-2:#d4d4d4;
+  --muted:#a9a9a9;
+  --line:#2c2c2c;
+  --line-strong:#444444;
 
-  --t1:#7fd4da;
-  --t2:#58b2b9;
-  --t3:#3c8990;
-  --t4:#2a636a;
-  --t5:#1d454b;
+  --t1:#d6d0ff;
+  --t2:#b2a8ff;
+  --t3:#8e81ff;
+  --t4:#644df2;
+  --t5:#4f2db8;
 
-  --accent:#63c3ca;
-  --accent-ink:#8fd8de;
-  --accent-wash:#14282b;
+  --accent:#ff722e;
+  --accent-ink:#ff8a4f;
+  --accent-wash:#2a1408;
 
-  --w70:#8fd8de;
-  --w70-bg:#14282b;
-  --w30:#e0b070;
-  --w30-bg:#2c2318;
+  --w70:#ff8a4f;
+  --w70-bg:#2a1408;
+  --w30:#b2a8ff;
+  --w30-bg:#1e1640;
 
-  --shadow-card:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.7);
-  --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 18px 40px -20px rgba(0,0,0,.8);
+  --shadow-card:0 1px 2px rgba(0,0,0,.45), 0 8px 24px -14px rgba(0,0,0,.75);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.5), 0 18px 40px -20px rgba(0,0,0,.85);
 }
 
 *{box-sizing:border-box}
@@ -108,7 +121,7 @@ body{
   margin:0;
   background:var(--paper);
   color:var(--ink);
-  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-family:var(--ff-sans);
   font-size:15px;
   line-height:1.62;
   -webkit-font-smoothing:antialiased;
@@ -132,7 +145,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
   display:flex;align-items:center;gap:24px;min-height:52px;flex-wrap:wrap;
 }
 .nav-mark{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-family:var(--ff-mono);
   font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--accent-ink);font-weight:500;white-space:nowrap;
 }
@@ -146,20 +159,20 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 /* ============ hero ============ */
 .hero{padding-block:52px 40px;border-bottom:1px solid var(--line)}
 .eyebrow{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-family:var(--ff-mono);
   font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--accent-ink);margin:0 0 18px;
 }
 h1{
-  font-family:Newsreader,Georgia,"Times New Roman",serif;
-  font-weight:500;font-size:clamp(34px,5.4vw,54px);line-height:1.08;
-  letter-spacing:-.015em;margin:0 0 18px;text-wrap:balance;max-width:16ch;
+  font-family:var(--ff-serif);
+  font-weight:500;font-size:clamp(32px,5vw,50px);line-height:1.1;
+  letter-spacing:-.018em;margin:0 0 18px;text-wrap:balance;max-width:17ch;
 }
-h1 em{font-style:italic;color:var(--accent-ink)}
+h1 em{font-style:normal;color:var(--accent);font-weight:600}
 .lede{font-size:17px;color:var(--ink-2);max-width:var(--prose);margin:0 0 8px}
 .hero-meta{
   display:flex;gap:10px 24px;flex-wrap:wrap;margin-top:22px;
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);
+  font-family:var(--ff-mono);font-size:12px;color:var(--muted);
 }
 .hero-meta span{white-space:nowrap}
 
@@ -179,12 +192,12 @@ h1 em{font-style:italic;color:var(--accent-ink)}
 }
 .res-card:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px);border-color:var(--accent)}
 .res-kind{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-family:var(--ff-mono);
   font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
 }
 .res-name{
-  font-family:Newsreader,Georgia,serif;font-size:21px;font-weight:500;
-  line-height:1.2;color:var(--ink);
+  font-family:var(--ff-serif);font-size:20px;font-weight:500;
+  line-height:1.24;color:var(--ink);
 }
 .res-desc{font-size:13.5px;color:var(--muted);line-height:1.5;flex:1}
 .res-go{
@@ -201,7 +214,7 @@ h1 em{font-style:italic;color:var(--accent-ink)}
 .fig{padding:26px 24px 26px 0;border-right:1px solid var(--line)}
 .fig:last-child{border-right:0}
 .fig-n{
-  font-family:Newsreader,Georgia,serif;font-size:36px;font-weight:500;
+  font-family:var(--ff-serif);font-size:34px;font-weight:500;
   line-height:1;letter-spacing:-.02em;color:var(--ink);
   font-variant-numeric:tabular-nums;
 }
@@ -212,25 +225,25 @@ section{padding-block:56px;border-bottom:1px solid var(--line)}
 section:last-of-type{border-bottom:0}
 .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap}
 .sec-num{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-family:var(--ff-mono);
   font-size:11px;letter-spacing:.12em;color:var(--accent-ink);
   border:1px solid var(--line-strong);border-radius:2px;padding:3px 8px;
   white-space:nowrap;
 }
 h2{
-  font-family:Newsreader,Georgia,serif;font-weight:500;
-  font-size:clamp(25px,3.4vw,34px);line-height:1.15;letter-spacing:-.012em;
+  font-family:var(--ff-serif);font-weight:500;
+  font-size:clamp(24px,3.2vw,32px);line-height:1.18;letter-spacing:-.015em;
   margin:0;text-wrap:balance;
 }
 h3{
-  font-family:"IBM Plex Sans",sans-serif;font-size:13px;font-weight:600;
+  font-family:var(--ff-sans);font-size:13px;font-weight:600;
   letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);
   margin:0 0 14px;
 }
 .sec-lede{font-size:15.5px;color:var(--ink-2);max-width:var(--prose);margin:0 0 30px}
 p{margin:0 0 14px;max-width:var(--prose)}
 .muted{color:var(--muted)}
-code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.88em}
+code,.mono{font-family:var(--ff-mono);font-size:.88em}
 code{
   background:var(--surface-sunk);border:1px solid var(--line);
   border-radius:2px;padding:1px 5px;color:var(--ink-2);overflow-wrap:anywhere;
@@ -251,22 +264,21 @@ code{
   padding:16px 18px;display:flex;flex-direction:column;justify-content:center;gap:2px;
 }
 .step-n b{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-family:var(--ff-mono);
   font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--accent-ink);font-weight:500;
 }
 .step-n span{font-size:11.5px;color:var(--muted);line-height:1.3}
 .step-body{padding:16px 20px;display:flex;flex-direction:column;gap:8px;justify-content:center}
 .step-title{
-  font-family:Newsreader,Georgia,serif;font-size:18px;font-weight:500;
-  line-height:1.25;color:var(--ink);
+  font-family:var(--ff-serif);font-size:17.5px;font-weight:500;
+  line-height:1.28;color:var(--ink);
 }
 .step-items{display:flex;flex-wrap:wrap;gap:6px}
 .step-items i{
   font-style:normal;font-size:12px;color:var(--ink-2);
   background:var(--accent-wash);border-radius:2px;padding:3px 9px;
 }
-.step-rail{width:3px;background:var(--t3)}
 
 /* ============ tables ============ */
 .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
@@ -277,8 +289,8 @@ thead th{
   color:var(--muted);font-weight:600;background:var(--surface-sunk);white-space:nowrap;
 }
 tbody tr:last-child td{border-bottom:0}
-td.num,th.num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
-.rule-t{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--ff-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rule-t{font-family:var(--ff-mono);font-weight:500;white-space:nowrap}
 .dot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:7px;vertical-align:0}
 
 /* ============ split / panels ============ */
@@ -290,7 +302,7 @@ td.num,th.num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospac
 .kv li{display:flex;justify-content:space-between;gap:16px;font-size:13.5px;align-items:baseline}
 .kv .k{color:var(--muted)}
 .kv .v{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;
+  font-family:var(--ff-mono);font-size:13px;
   font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;
 }
 
@@ -298,18 +310,18 @@ td.num,th.num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospac
 .callout{
   background:var(--surface);border:1px solid var(--line-strong);
   border-left:3px solid var(--t3);border-radius:3px;
-  padding:16px 20px;margin:0 0 14px;font-size:13.5px;color:var(--ink-2);
+  padding:16px 20px;margin:0;font-size:13.5px;color:var(--ink-2);
   max-width:none;
 }
 .callout b{color:var(--ink)}
-.callout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-bottom:26px}
+.callout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:26px}
 
 /* formula */
 .formula{
   background:var(--surface);border:1px solid var(--line-strong);
   border-left:3px solid var(--accent);border-radius:3px;
   padding:22px 24px;margin:0 0 16px;
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-family:var(--ff-mono);
   font-size:14.5px;line-height:2;color:var(--ink-2);overflow-x:auto;
 }
 .formula .lhs{color:var(--accent-ink);font-weight:500}
@@ -381,8 +393,8 @@ img{max-width:100%}
       documentation, code and final results live.
     </p>
     <div class="hero-meta">
-      <span>Therapy area &mdash; Achondroplasia (Q77.4)</span>
-      <span>Brand &mdash; Voxzogo / vosoritide</span>
+      <span>Therapy area - Achondroplasia (Q77.4)</span>
+      <span>Brand - Voxzogo / vosoritide</span>
       <span>Claims through May 2026</span>
       <span>Prepared by ProcDNA</span>
     </div>
@@ -420,7 +432,7 @@ img{max-width:100%}
         <span class="res-name">Code &amp; Execution Pipeline</span>
         <span class="res-desc">
           Notebooks for the universe build, target tier workbook, account rollup pipeline, priority tiering
-          and the workload index &mdash; in documented run order.
+          and the workload index, in documented run order.
         </span>
         <span class="res-go">
           Open folder
@@ -444,10 +456,10 @@ img{max-width:100%}
 
     <div class="figs" style="margin-top:38px">
       <div class="fig"><div class="fig-n">31,225</div><div class="fig-l">HCPs in the refreshed universe</div></div>
-      <div class="fig"><div class="fig-n">~3.2K</div><div class="fig-l">Priority targets, Tiers&nbsp;1&ndash;3</div></div>
+      <div class="fig"><div class="fig-n">~3.2K</div><div class="fig-l">Priority targets, Tiers 1-3</div></div>
       <div class="fig"><div class="fig-n">7,152</div><div class="fig-l">Net-new HCPs added</div></div>
       <div class="fig"><div class="fig-n">6,867</div><div class="fig-l">Mastered accounts rolled up</div></div>
-      <div class="fig"><div class="fig-n">179</div><div class="fig-l">Priority accounts, P1&nbsp;+&nbsp;P2</div></div>
+      <div class="fig"><div class="fig-n">179</div><div class="fig-l">Priority accounts, P1 + P2</div></div>
     </div>
   </div>
 </section>
@@ -497,14 +509,14 @@ img{max-width:100%}
         <div class="step-n"><b>Step 5</b><span>Linkage</span></div>
         <div class="step-body">
           <div class="step-title">Connect HCPs to organisations</div>
-          <div class="step-items"><i>HCP&ndash;HCO Affiliation</i></div>
+          <div class="step-items"><i>HCP-HCO Affiliation</i></div>
         </div>
       </div>
       <div class="step">
         <div class="step-n"><b>Step 6</b><span>Account view</span></div>
         <div class="step-body">
           <div class="step-title">Roll up and prioritize accounts</div>
-          <div class="step-items"><i>HCO&ndash;Parent HCO Roll Up (campus level)</i><i>Account Prioritization</i></div>
+          <div class="step-items"><i>HCO-Parent HCO Roll Up (campus level)</i><i>Account Prioritization</i></div>
         </div>
       </div>
       <div class="step">
@@ -515,12 +527,6 @@ img{max-width:100%}
         </div>
       </div>
     </div>
-
-    <p class="note">
-      <strong>One naming caution.</strong> Three different scales are informally called &ldquo;tier&rdquo;:
-      the interim HCP tier from Step&nbsp;2, the field-ready target tier from Step&nbsp;4, and the account
-      priority tier from Step&nbsp;6. Always reference the fully-qualified column name.
-    </p>
   </div>
 </section>
 
@@ -543,12 +549,7 @@ img{max-width:100%}
         the same specialty group.
       </div>
       <div class="callout">
-        <b>~23% net-new.</b> 7,152 HCPs are new to the universe, including 31 Pediatric Endocrinologists and
-        30 Geneticists.
-      </div>
-      <div class="callout">
-        <b>&ldquo;Others&rdquo; nearly halved.</b> Broader multi-source identification cut the unclassified
-        pool from 73% on VOD alone to ~50%.
+        <b>~23% net-new.</b> 7,152 HCPs are new to the universe in the current refresh.
       </div>
     </div>
 
@@ -581,7 +582,7 @@ img{max-width:100%}
           <li>Pediatric Endocrinologists</li>
           <li>Geneticists</li>
           <li>Pediatric Orthopedists</li>
-          <li>ENTs <span class="muted">&mdash; introduced this refresh</span></li>
+          <li>ENTs <span class="muted">- introduced this refresh</span></li>
           <li>Pediatrics</li>
           <li>Orthos</li>
           <li>NP / PA</li>
@@ -607,12 +608,12 @@ img{max-width:100%}
           <tr><td>Ped Orthos</td><td class="num">954</td><td>Core Achon specialist segment</td></tr>
           <tr><td>ENTs</td><td class="num">738</td><td>Introduced as a standalone group this refresh</td></tr>
           <tr><td>Pediatrics</td><td class="num">24,055</td><td>Largest segment by volume</td></tr>
-          <tr><td>Orthos</td><td class="num">110</td><td>&mdash;</td></tr>
-          <tr><td>NP / PA</td><td class="num">568</td><td>&mdash;</td></tr>
-          <tr><td>Endos</td><td class="num">8</td><td>&mdash;</td></tr>
-          <tr><td>Others</td><td class="num">3,571</td><td>Down from 73% to ~50% of the unclassified pool</td></tr>
+          <tr><td>Orthos</td><td class="num">110</td><td>-</td></tr>
+          <tr><td>NP / PA</td><td class="num">568</td><td>-</td></tr>
+          <tr><td>Endos</td><td class="num">8</td><td>-</td></tr>
+          <tr><td>Others</td><td class="num">3,571</td><td>Unclassified fallback group</td></tr>
           <tr><td>Not in new universe</td><td class="num">190</td><td>Carried in the previous universe only</td></tr>
-          <tr><td><strong>Total</strong></td><td class="num"><strong>31,225</strong></td><td>&mdash;</td></tr>
+          <tr><td><strong>Total</strong></td><td class="num"><strong>31,225</strong></td><td>-</td></tr>
         </tbody>
       </table>
     </div>
@@ -627,8 +628,8 @@ img{max-width:100%}
       <h2>Deciling &amp; initial tiering</h2>
     </div>
     <p class="sec-lede">
-      Three independent deciles are computed &mdash; one per claims source &mdash; and the best of the three
-      is kept, so an HCP gets credit for whichever source shows the strongest relative engagement.
+      Three independent deciles are computed, one per claims source, and the best of the three is kept, so an
+      HCP gets credit for whichever source shows the strongest relative engagement.
     </p>
 
     <div class="split" style="margin-bottom:32px">
@@ -642,30 +643,30 @@ img{max-width:100%}
         </ul>
         <p class="note" style="margin-top:18px;border:0;padding:0">
           Each metric is normalised to a share of its column total, ranked descending, and mapped to a
-          1&ndash;10 band on cumulative share. HCPs with volume floor at decile&nbsp;1; HCPs with none sit at&nbsp;0.
+          1-10 band on cumulative share. HCPs with volume floor at decile 1; HCPs with none sit at 0.
         </p>
       </div>
 
       <div class="panel">
-        <h3>Initial tier rules &mdash; first match wins</h3>
+        <h3>Initial tier rules, first match wins</h3>
         <div class="tscroll" style="border:0">
           <table style="min-width:0">
             <tbody>
               <tr>
                 <td class="rule-t"><i class="dot" style="background:var(--t1)"></i>Tier 1</td>
-                <td>KOL/QED flagged <strong>or</strong> known treater <strong>or</strong> decile&nbsp;&ge;&nbsp;5 and Ped&nbsp;Endo/Geneticist</td>
+                <td>KOL/QED flagged <strong>or</strong> known treater <strong>or</strong> decile &ge; 5 and Ped Endo/Geneticist</td>
               </tr>
               <tr>
                 <td class="rule-t"><i class="dot" style="background:var(--t2)"></i>Tier 2</td>
-                <td>Decile&nbsp;&lt;&nbsp;5 Ped&nbsp;Endo/Geneticist <strong>or</strong> decile&nbsp;&ge;&nbsp;8</td>
+                <td>Decile &lt; 5 Ped Endo/Geneticist <strong>or</strong> decile &ge; 8</td>
               </tr>
               <tr>
                 <td class="rule-t"><i class="dot" style="background:var(--t3)"></i>Tier 3</td>
-                <td>Decile&nbsp;&le;&nbsp;7 and generates Q77.4 claims <strong>or</strong> decile&nbsp;5&ndash;7</td>
+                <td>Decile &le; 7 and generates Q77.4 claims <strong>or</strong> decile 5-7</td>
               </tr>
               <tr>
                 <td class="rule-t"><i class="dot" style="background:var(--t4)"></i>Tier 4</td>
-                <td>Fallback &mdash; none of the above</td>
+                <td>Fallback, none of the above</td>
               </tr>
             </tbody>
           </table>
@@ -674,8 +675,8 @@ img{max-width:100%}
     </div>
 
     <p class="note" style="margin-top:0">
-      No HCP generating a Q77.4 claim lands in the bottom tier, and no Ped&nbsp;Endo or Geneticist falls below
-      Tier&nbsp;2 &mdash; both QC gates confirmed on the refreshed build.
+      No HCP generating a Q77.4 claim lands in the bottom tier, and no Ped Endo or Geneticist falls below
+      Tier 2. Both QC gates confirmed on the refreshed build.
     </p>
   </div>
 </section>
@@ -698,27 +699,27 @@ img{max-width:100%}
         <ul class="kv">
           <li><span class="k">Q77.4 arm</span><span class="v">&ge;1 office E&amp;M + &ge;2 dates</span></li>
           <li><span class="k">Voxzogo arm</span><span class="v">&ge;1 Vox / vosoritide fill</span></li>
-          <li><span class="k">Age scope</span><span class="v">2&ndash;18 years</span></li>
+          <li><span class="k">Age scope</span><span class="v">2-18 years</span></li>
           <li><span class="k">Treatment status</span><span class="v">Active / Discont. / Never</span></li>
         </ul>
       </div>
       <div class="panel">
-        <h3>Attribution cascade &mdash; lowest cycle wins</h3>
+        <h3>Attribution cascade, lowest cycle wins</h3>
         <ol style="margin:0;padding-left:20px;font-size:13.5px;color:var(--ink-2);line-height:1.8">
-          <li>Tier&nbsp;1/2 Ped Endo or Geneticist, qualifying visit</li>
+          <li>Tier 1/2 Ped Endo or Geneticist, qualifying visit</li>
           <li>Vox prescriber, gated on a qualifying visit</li>
-          <li>Tier&nbsp;1/2, other specialty</li>
-          <li>Tier&nbsp;3/4</li>
-          <li>Tier&nbsp;5</li>
+          <li>Tier 1/2, other specialty</li>
+          <li>Tier 3/4</li>
+          <li>Tier 5</li>
           <li>Visited HCP outside the universe</li>
-          <li>Vox-prescriber stop-gap <span class="muted">&mdash; not visit-gated</span></li>
-          <li>Incidence-treater stop-gap <span class="muted">&mdash; last resort</span></li>
+          <li>Vox-prescriber stop-gap <span class="muted">- not visit-gated</span></li>
+          <li>Incidence-treater stop-gap <span class="muted">- last resort</span></li>
         </ol>
       </div>
     </div>
 
     <p>
-      A rendered 3-year Q77.4 visit is required for any attribution &mdash; a Voxzogo fill alone no longer
+      A rendered 3-year Q77.4 visit is required for any attribution. A Voxzogo fill alone no longer
       qualifies. Ties within a cycle break on office E&amp;M visits first, so a clinician who actually sees the
       patient in clinic outranks high-frequency home-health billing.
     </p>
@@ -728,7 +729,7 @@ img{max-width:100%}
       <table>
         <thead><tr><th>Tier</th><th>Profile</th><th>Rule</th><th class="num">HCPs</th><th class="num">%</th></tr></thead>
         <tbody>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>Tier 1</td><td>KOLs, treaters &amp; high&ndash;Achon-exposure Ped Endos + Geneticists</td><td>Carries original tier 1</td><td class="num">742</td><td class="num">2%</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>Tier 1</td><td>KOLs, treaters &amp; high Achon-exposure Ped Endos + Geneticists</td><td>Carries original tier 1</td><td class="num">742</td><td class="num">2%</td></tr>
           <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>Tier 2</td><td>Non-treating Ped Endos &amp; Geneticists + other high-exposure HCPs</td><td>Carries original tier 2</td><td class="num">1,144</td><td class="num">4%</td></tr>
           <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>Tier 3</td><td>Ped Orthos, ENTs &amp; Pediatrics with medium-exposure HCPs</td><td>Attributed patients &gt; 0 <strong>or</strong> patients touched &ge; 7</td><td class="num">1,287</td><td class="num">4%</td></tr>
           <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>Tier 4</td><td>Pediatrics and other HCPs with higher Q77.4 claims</td><td>No patient evidence, original tier 3</td><td class="num">10,733</td><td class="num">34%</td></tr>
@@ -738,8 +739,8 @@ img{max-width:100%}
     </div>
 
     <div class="assume" style="max-width:none">
-      <b>Priority tiers (~3.2K).</b> Tiers 1&ndash;3 form the field target pool. The patient-touchpoint
-      threshold was set at <b>&ge;&nbsp;7</b> to land the final pool at approximately 3.2K targets.
+      <b>Priority tiers (~3.2K).</b> Tiers 1-3 form the field target pool. The patient-touchpoint
+      threshold was set at <b>&ge; 7</b> to land the final pool at approximately 3.2K targets.
     </div>
   </div>
 </section>
@@ -758,9 +759,9 @@ img{max-width:100%}
 
     <div class="split" style="margin-bottom:32px">
       <div class="panel">
-        <h3>HCP &rarr; account affiliation</h3>
+        <h3>HCP to account affiliation</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          Accounts resolve from a single mastered NPI-to-account table &mdash; the earlier name-matching
+          Accounts resolve from a single mastered NPI-to-account table. The earlier name-matching
           crosswalk is retired, and placeholder values are converted to true nulls so an HCP with no genuine
           affiliation is excluded rather than grouped under a dash.
         </p>
@@ -787,10 +788,10 @@ img{max-width:100%}
       <table>
         <thead><tr><th>Priority tier</th><th>Definition</th></tr></thead>
         <tbody>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1&nbsp;&ndash;&nbsp;Elite</td><td>Top cluster among signal-bearing accounts, or promoted by the elite patient-volume floor</td></tr>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>P2&nbsp;&ndash;&nbsp;Strong</td><td>Middle cluster retained on the volume floor, or promoted from below on patient volume</td></tr>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3&nbsp;&ndash;&nbsp;Tail</td><td>Remaining signal-bearing accounts</td></tr>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>P4&nbsp;&ndash;&nbsp;Minimal</td><td>No target HCPs, patients, Tier&nbsp;1/2 HCPs or claim exposure</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1 - Elite</td><td>Top cluster among signal-bearing accounts, or promoted by the elite patient-volume floor</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>P2 - Strong</td><td>Middle cluster retained on the volume floor, or promoted from below on patient volume</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3 - Tail</td><td>Remaining signal-bearing accounts</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>P4 - Minimal</td><td>No target HCPs, patients, Tier 1/2 HCPs or claim exposure</td></tr>
         </tbody>
       </table>
     </div>
@@ -832,7 +833,7 @@ img{max-width:100%}
         </ul>
         <div class="assume">
           <b>Assumption.</b> These per-tier call counts are a ProcDNA assumption for sizing the plan, not a
-          value derived from the data &mdash; they can be re-set with the field team.
+          value derived from the data. They can be re-set with the field team.
         </div>
       </div>
       <div class="panel">
@@ -841,14 +842,14 @@ img{max-width:100%}
           <li><span class="k">Total call pool</span><span class="v">32,000</span></li>
           <li><span class="k"><span class="wt wt70">70%</span> Call share</span><span class="v">calls &divide; target_calls</span></li>
           <li><span class="k"><span class="wt wt30">30%</span> Final decile share</span><span class="v">decile &divide; target_deciles</span></li>
-          <li><span class="k">Eligible pool</span><span class="v">Tiers 1&ndash;3 only</span></li>
+          <li><span class="k">Eligible pool</span><span class="v">Tiers 1-3 only</span></li>
         </ul>
       </div>
       <div class="panel">
         <h3>Geography</h3>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
           Each HCP resolves to one ZIP through a source waterfall, then maps to a state and territory via the
-          ZIP-to-territory reference table &mdash; so workload can be balanced and compared by geography.
+          ZIP-to-territory reference table, so workload can be balanced and compared by geography.
         </p>
       </div>
     </div>
