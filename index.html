@@ -44,6 +44,9 @@
   --accent-2:#4f2db8;
   --accent-2-wash:#ece9ff;
 
+  --mark-bg:#4f2db8;
+  --mark-fg:#ffffff;
+
   --w70:#b34010;
   --w70-bg:#ffece3;
   --w30:#4f2db8;
@@ -80,6 +83,9 @@
     --accent-2:#b2a8ff;
     --accent-2-wash:#1e1640;
 
+    --mark-bg:#b2a8ff;
+    --mark-fg:#0f0f0f;
+
     --w70:#ff8a4f;
     --w70-bg:#2a1408;
     --w30:#b2a8ff;
@@ -111,6 +117,9 @@
 
   --accent-2:#b2a8ff;
   --accent-2-wash:#1e1640;
+
+  --mark-bg:#b2a8ff;
+  --mark-fg:#0f0f0f;
 
   --w70:#ff8a4f;
   --w70-bg:#2a1408;
@@ -150,12 +159,28 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
   max-width:var(--maxw);margin-inline:auto;padding:0 20px;
   display:flex;align-items:center;gap:18px;min-height:var(--navh);flex-wrap:wrap;
 }
-.nav-mark{
-  font-family:var(--ff-mono);
-  font-size:11px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--accent-2);font-weight:500;white-space:nowrap;
-  text-decoration:none;
+.brand{
+  display:flex;align-items:center;gap:11px;
+  text-decoration:none;padding:9px 0;flex:none;
 }
+.brand-mark{
+  width:30px;height:30px;border-radius:6px;flex:none;
+  background:var(--mark-bg);color:var(--mark-fg);
+  font-family:var(--ff-mono);font-size:11.5px;font-weight:500;letter-spacing:.02em;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .18s ease;
+}
+.brand:hover .brand-mark{transform:rotate(-4deg) scale(1.04)}
+.brand-text{display:flex;flex-direction:column;line-height:1.16;white-space:nowrap}
+.brand-parent{
+  font-family:var(--ff-mono);font-size:9px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--muted);
+}
+.brand-name{
+  font-family:var(--ff-serif);font-size:15.5px;font-weight:600;
+  color:var(--ink);letter-spacing:-.012em;
+}
+.brand:hover .brand-name{color:var(--accent-2)}
 .nav-links{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto;align-items:center}
 .nav-links a{
   color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:500;
@@ -433,7 +458,13 @@ img{max-width:100%}
 <body>
 <nav class="nav">
   <div class="nav-in">
-    <a class="nav-mark" href="#top">BridgeBio &middot; Infi Achon</a>
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">IA</span>
+      <span class="brand-text">
+        <span class="brand-parent">BridgeBio</span>
+        <span class="brand-name">Infi Achon</span>
+      </span>
+    </a>
     <div class="nav-links">
       <a href="#resources">Resources</a>
       <a href="#pipeline">Pipeline</a>
