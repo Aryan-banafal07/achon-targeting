@@ -211,8 +211,9 @@ h1 em{font-style:normal;color:var(--accent);font-weight:600}
   display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
 }
-.fig{padding:26px 24px 26px 0;border-right:1px solid var(--line)}
-.fig:last-child{border-right:0}
+.fig{padding:26px 24px;border-right:1px solid var(--line)}
+.fig:first-child{padding-left:0}
+.fig:last-child{border-right:0;padding-right:0}
 .fig-n{
   font-family:var(--ff-serif);font-size:34px;font-weight:500;
   line-height:1;letter-spacing:-.02em;color:var(--ink);
@@ -346,7 +347,7 @@ footer{padding-block:38px 46px;color:var(--muted);font-size:12.5px}
 .foot-links{display:flex;gap:18px;flex-wrap:wrap}
 
 @media (max-width:640px){
-  .fig{padding:20px 16px 20px 0}
+  .fig{padding:20px 16px}
   section{padding-block:44px}
   .step{grid-template-columns:1fr}
   .step-n{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;gap:10px;align-items:baseline}
