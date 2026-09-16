@@ -473,8 +473,8 @@ img{max-width:100%}
       <a href="#step2"><span class="n">2</span>Initial Tiering</a>
       <a href="#step3"><span class="n">3</span>Attribution</a>
       <a href="#step4"><span class="n">4</span>Targeting</a>
-      <a href="#step5"><span class="n">5</span>Affiliations</a>
-      <a href="#step6"><span class="n">6</span>Account Tiering</a>
+      <a href="#step5"><span class="n">5</span>HCP Affiliation</a>
+      <a href="#step6"><span class="n">6</span>HCO Tiering</a>
       <a href="#step7"><span class="n">7</span>Workload</a>
     </div>
   </div>
@@ -487,7 +487,7 @@ img{max-width:100%}
     <p class="lede">
       The Infigratinib (Infi) achondroplasia HCP universe, refreshed for the Q3 2026 targeting cycle:
       a consolidated NPI-keyed universe of <strong>31,225 HCPs</strong> across five key specialist segments,
-      scored on engagement decile, tiered on real patient evidence, rolled up to mastered accounts, and sized
+      scored on engagement decile, tiered on real patient evidence, rolled up to mastered HCOs, and sized
       into a field call plan. This page is the index: what was built, the rules behind each step, and where the
       documentation, code and final results live.
     </p>
@@ -570,7 +570,7 @@ img{max-width:100%}
       <div class="fig"><div class="fig-n">31,225</div><div class="fig-l">HCPs in the refreshed universe</div></div>
       <div class="fig"><div class="fig-n">~3.2K</div><div class="fig-l">Priority targets, Tiers 1-3</div></div>
       <div class="fig"><div class="fig-n">7,152</div><div class="fig-l">Net-new HCPs added</div></div>
-      <div class="fig"><div class="fig-n">6,867</div><div class="fig-l">Mastered accounts rolled up</div></div>
+      <div class="fig"><div class="fig-n">6,867</div><div class="fig-l">Mastered HCOs rolled up</div></div>
       <div class="fig"><div class="fig-n">179</div><div class="fig-l">Priority accounts, P1 + P2</div></div>
     </div>
   </div>
@@ -599,7 +599,7 @@ img{max-width:100%}
       <a class="step" href="#step2">
         <div class="step-n"><b>Step 2</b><span>Segmentation</span></div>
         <div class="step-body">
-          <div class="step-title">Initial HCP Tiering</div>
+          <div class="step-title">Initial Tiering</div>
           <div class="step-items"><i>HCP Deciling</i><i>HCP Tiering</i></div>
         </div>
         <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
@@ -623,16 +623,16 @@ img{max-width:100%}
       <a class="step" href="#step5">
         <div class="step-n"><b>Step 5</b><span>Linkage</span></div>
         <div class="step-body">
-          <div class="step-title">Affiliations</div>
+          <div class="step-title">HCP Affiliation</div>
           <div class="step-items"><i>HCP-HCO Affiliation</i></div>
         </div>
         <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
       </a>
       <a class="step" href="#step6">
-        <div class="step-n"><b>Step 6</b><span>Account view</span></div>
+        <div class="step-n"><b>Step 6</b><span>HCO view</span></div>
         <div class="step-body">
-          <div class="step-title">Account Tiering</div>
-          <div class="step-items"><i>HCO-Parent HCO Roll Up (campus level)</i><i>Account Prioritization</i></div>
+          <div class="step-title">HCO Roll-up and Tiering</div>
+          <div class="step-items"><i>HCO Roll-up</i><i>HCO Prioritization</i></div>
         </div>
         <div class="step-go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></div>
       </a>
@@ -725,7 +725,7 @@ img{max-width:100%}
   <div class="wrap">
     <div class="sec-head">
       <span class="sec-num">Step 2</span>
-      <h2>Initial HCP Tiering</h2>
+      <h2>Initial Tiering</h2>
     </div>
     <p class="sec-lede">
       Three independent deciles are computed, one per claims source, and the best of the three is kept, so an
@@ -852,8 +852,8 @@ img{max-width:100%}
       <h2>HCP Field Targeting</h2>
     </div>
     <p class="sec-lede">
-      Attribution and patient-touch volume convert the initial tier into a field-ready target tier. Tiers 1
-      to 3 form the call plan; Tiers 4 and 5 are the non-target long tail.
+      Attribution and patient-touch volume convert the initial tier into a field-ready final tier. Tiers 1
+      to 3 form the call plan; Tiers 4 and 5 are Non-Priority.
     </p>
 
     <div class="tscroll">
@@ -881,20 +881,20 @@ img{max-width:100%}
   <div class="wrap">
     <div class="sec-head">
       <span class="sec-num">Step 5</span>
-      <h2>Affiliations</h2>
+      <h2>HCP Affiliation</h2>
     </div>
     <p class="sec-lede">
       Every target HCP is linked to a mastered healthcare organisation, so the target list can be read at the
-      account level in Step 6.
+      HCO level in Step 6.
     </p>
 
     <div class="split">
       <div class="panel">
-        <h3>How accounts resolve</h3>
+        <h3>How HCOs resolve</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          Accounts resolve from a single mastered NPI-to-account table. The earlier name-matching crosswalk
+          HCOs resolve from a single mastered NPI-to-HCO table. The earlier name-matching crosswalk
           is retired, and placeholder values are converted to true nulls so an HCP with no genuine
-          affiliation is excluded rather than grouped under a dash.
+          affiliation is excluded rather than grouped under a placeholder HCO.
         </p>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
           Affiliations are sourced from the Infi universe and the VOD crosswalk, with DHC hospital
@@ -910,7 +910,7 @@ img{max-width:100%}
         </p>
         <div class="assume">
           <b>Implication.</b> Higher coverage of target HCPs going into the HCO tier refresh, which makes the
-          account-level view in Step 6 more complete.
+          HCO-level view in Step 6 more complete.
         </div>
       </div>
     </div>
@@ -922,19 +922,19 @@ img{max-width:100%}
   <div class="wrap">
     <div class="sec-head">
       <span class="sec-num">Step 6</span>
-      <h2>Account Tiering</h2>
+      <h2>HCO Roll-up and Tiering</h2>
     </div>
     <p class="sec-lede">
-      Affiliated HCPs and their patients roll up to the mastered account, which is then assigned a priority
-      tier. The target universe is frozen first, so account numbers stay reproducible between runs.
+      Affiliated HCPs and their patients roll up to the mastered HCO, which is then assigned a priority
+      tier. The target universe is frozen first, so HCO numbers stay reproducible between runs.
     </p>
 
     <div class="split" style="margin-bottom:32px">
       <div class="panel">
         <h3>Priority tiering method</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          Signal-bearing accounts are clustered on log-scaled opportunity and quality features, then ranked
-          by mean signal. Accounts with no signal at all skip clustering entirely.
+          Signal-bearing HCOs are clustered on log-scaled opportunity and quality features, then ranked
+          by mean signal. HCOs with no signal at all skip clustering entirely.
         </p>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
           Deterministic patient-volume floors then run in order, and the result is frozen so future rollups
@@ -944,21 +944,21 @@ img{max-width:100%}
       <div class="panel">
         <h3>What drives a tier change</h3>
         <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
-          Between refreshes, accounts move tier on real changes in the number of affiliated target HCPs, the
+          Between refreshes, HCOs move tier on real changes in the number of affiliated target HCPs, the
           count of unique and treated patients, and Q77.4 claim volume. Clustering results are locked after
           each intentional re-tier so routine rebuilds do not shift them.
         </p>
       </div>
     </div>
 
-    <h3>Account priority tiers</h3>
+    <h3>HCO priority tiers</h3>
     <div class="tscroll">
       <table>
-        <thead><tr><th>Priority tier</th><th>Definition</th></tr></thead>
+        <thead><tr><th>HCO priority tier</th><th>Definition</th></tr></thead>
         <tbody>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1 - Elite</td><td>Top cluster among signal-bearing accounts, or promoted by the elite patient-volume floor</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t1)"></i>P1 - Elite</td><td>Top cluster among signal-bearing HCOs, or promoted by the elite patient-volume floor</td></tr>
           <tr><td class="rule-t"><i class="dot" style="background:var(--t2)"></i>P2 - Strong</td><td>Middle cluster retained on the volume floor, or promoted from below on patient volume</td></tr>
-          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3 - Tail</td><td>Remaining signal-bearing accounts</td></tr>
+          <tr><td class="rule-t"><i class="dot" style="background:var(--t3)"></i>P3 - Tail</td><td>Remaining signal-bearing HCOs</td></tr>
           <tr><td class="rule-t"><i class="dot" style="background:var(--t4)"></i>P4 - Minimal</td><td>No target HCPs, patients, Tier 1/2 HCPs or claim exposure</td></tr>
         </tbody>
       </table>
@@ -974,7 +974,7 @@ img{max-width:100%}
       <h2>Workload Index</h2>
     </div>
     <p class="sec-lede">
-      The last step converts target tier and final decile into a single number that sizes each HCP&rsquo;s
+      The last step converts final tier and final decile into a single number that sizes each HCP&rsquo;s
       fair share of the field&rsquo;s fixed call capacity.
     </p>
 
