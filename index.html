@@ -808,8 +808,8 @@ img{max-width:100%}
       <h2>Patient Attribution</h2>
     </div>
     <p class="sec-lede">
-      Specialty alone doesn&rsquo;t earn a field call. This step builds the patient cohort, then runs an
-      eight-cycle cascade to pick a single primary HCP for every patient.
+      This step builds the patient cohort, then runs an eight-cycle cascade to pick a single primary HCP
+      for every patient.
     </p>
 
     <div class="split" style="margin-bottom:26px">
@@ -876,7 +876,7 @@ img{max-width:100%}
     </div>
     <p class="sec-lede">
       Attribution and patient-touch volume convert the initial tier into a field-ready final tier. Tiers 1
-      to 3 form the call plan; Tiers 4 and 5 are Non-Priority.
+      to 3 form the priority targets; Tiers 4 and 5 are Non-Priority.
     </p>
 
     <div class="tscroll">
@@ -907,29 +907,27 @@ img{max-width:100%}
       <h2>HCP Affiliation</h2>
     </div>
     <p class="sec-lede">
-      Every target HCP is linked to a mastered healthcare organisation, so the target list can be read at the
+      Target HCPs are linked to a mastered healthcare organisation, so the target list can be read at the
       HCO level in Step 6.
     </p>
 
     <div class="split">
       <div class="panel">
-        <h3>How HCOs resolve</h3>
+        <h3>How affiliations resolve</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          HCOs resolve from a single mastered NPI-to-HCO table. The earlier name-matching crosswalk
-          is retired, and placeholder values are converted to true nulls so an HCP with no genuine
-          affiliation is excluded rather than grouped under a placeholder HCO.
-        </p>
-        <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
           Affiliations are sourced from the Infi universe and the VOD crosswalk, with DHC hospital
           affiliation and Veeva primary affiliation layered on for coverage.
         </p>
+        <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:0">
+          Affiliations were matched against the crosswalk table, by direct or fuzzy match, and the
+          corresponding mastered HCOs were pulled.
+        </p>
       </div>
       <div class="panel">
-        <h3>Closing the coverage gap</h3>
+        <h3>Output: NPI to mastered HCO</h3>
         <p style="font-size:13.5px;color:var(--ink-2)">
-          Among the target pool, a set of HCPs had no direct mastered HCO available through either the Infi
-          universe or the VOD crosswalk. Fuzzy matching and manual checks recovered mastered HCOs for a
-          further group of them.
+          An HCP with no mastered HCO is assigned null rather than grouped under a placeholder HCO. The
+          result is the NPI-to-mastered-HCO table.
         </p>
         <div class="assume">
           <b>Implication.</b> Higher coverage of target HCPs going into the HCO tier refresh, which makes the
